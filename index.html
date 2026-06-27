@@ -10,7 +10,7 @@
     <header class="site-header">
         <nav class="site-nav" aria-label="Primary">
             <a class="brand" href="#home" aria-label="Abuzar RaziQ home">
-                <img src="./images/Logo.png" alt="Abuzar RaziQ logo" loading="lazy">
+                <img src="./images/Logo.png" alt="Abuzar RaziQ logo" loading="eager" decoding="async" fetchpriority="high">
             </a>
             <button class="ham-menu" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
                 <span></span>
@@ -30,9 +30,9 @@
     <main>
         <section class="hero section-shell" id="home">
             <div class="hero-copy reveal">
-                <p class="eyebrow">Frontend Developer</p>
+                <p class="eyebrow">MERN Stack Developer</p>
                 <h1>Abuzar RaziQ</h1>
-                <p class="hero-text">I design and build clean, responsive web experiences that feel fast, modern, and easy to use.</p>
+                <p class="hero-text">I build responsive, production-minded web experiences with React, Node.js, Express, and MongoDB, focused on speed, clarity, and smooth interaction.</p>
                 <div class="hero-actions">
                     <a class="primary-action" href="#work">View work</a>
                     <a class="secondary-action" href="#about">About me</a>
@@ -40,66 +40,118 @@
             </div>
             <div class="hero-card reveal">
                 <div class="hero-image-wrap">
-                    <img src="./images/profileimg.jpg" alt="Portrait of Abuzar RaziQ" loading="lazy">
+                    <img src="./images/profileimg.jpg" alt="Portrait of Abuzar RaziQ" loading="eager" decoding="async" fetchpriority="high">
                 </div>
                 <div class="hero-card-copy">
-                    <p class="card-label">Based in Pakistan</p>
-                    <p>Focused on clean UI, responsive layouts, and practical front-end systems.</p>
+                    <p class="card-label">Hostel City, Islamabad</p>
+                    <p>MERN stack developer, CS student, and fast learner who enjoys practical systems and clean UI.</p>
                 </div>
             </div>
         </section>
 
         <section class="section-shell strip reveal" aria-label="Highlights">
             <div>
-                <span>02+</span>
-                <p>Years experience</p>
+                <span>React</span>
+                <p>Frontend interfaces and reusable components</p>
             </div>
             <div>
-                <span>50+</span>
-                <p>Projects showcased</p>
+                <span>Node</span>
+                <p>Express APIs, MongoDB, and server-side logic</p>
             </div>
             <div>
-                <span>Modern</span>
-                <p>Responsive interfaces</p>
+                <span>Linux</span>
+                <p>Efficient workflow with Neovim, Warp, Git, and Copilot</p>
             </div>
         </section>
 
         <section class="section-shell info-grid" id="about">
             <article class="info-card reveal">
-                <img src="./images/signature.png" alt="Signature" loading="lazy">
-                <h2>Credentials</h2>
-                <p>Available for collaborative front-end work, portfolio builds, and polished landing pages.</p>
+                <img src="./images/signature.png" alt="Signature" loading="lazy" decoding="async">
+                <h2>Professional Summary</h2>
+                <p>Enthusiastic MERN Stack Developer and Computer Science student with a strong focus on continuous learning, adaptability, and real-world problem solving.</p>
             </article>
             <article class="info-card reveal">
-                <img src="./images/gfonts.png" alt="Google Fonts illustration" loading="lazy">
-                <h2>Design System</h2>
-                <p>Typography-first layouts with strong spacing, subtle motion, and mobile-friendly structure.</p>
+                <img src="./images/gfonts.png" alt="Technology illustration" loading="lazy" decoding="async">
+                <h2>Learning Workflow</h2>
+                <p>Optimized for efficient work using Linux, Neovim, Warp Terminal, VS Code, Cursor, GitHub Copilot, and Gemini.</p>
             </article>
             <article class="info-card reveal">
-                <img src="./images/contact-icons.png" alt="Contact illustration" loading="lazy">
-                <h2>Stay Connected</h2>
-                <p>Open to remote opportunities and freelance work. Reach out through the contact page.</p>
+                <img src="./images/contact-icons.png" alt="Contact illustration" loading="lazy" decoding="async">
+                <h2>Open To Work</h2>
+                <p>Available for junior developer and internship roles, including growth-focused paid or unpaid opportunities.</p>
             </article>
+        </section>
+
+        <section class="section-shell work-section" aria-labelledby="skills-heading">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Technical skills</p>
+                <h2 id="skills-heading">A practical stack built around modern web development, efficient tooling, and steady learning.</h2>
+            </div>
+            <div class="skills-grid">
+                <article class="skill-card reveal">
+                    <h3>Frontend</h3>
+                    <div class="skill-tags">
+                        <span>React.js</span>
+                        <span>HTML5</span>
+                        <span>CSS3</span>
+                        <span>Tailwind CSS</span>
+                        <span>Vanilla JavaScript</span>
+                    </div>
+                </article>
+                <article class="skill-card reveal">
+                    <h3>Backend</h3>
+                    <div class="skill-tags">
+                        <span>Node.js</span>
+                        <span>Express.js</span>
+                        <span>MongoDB</span>
+                        <span>Mongoose</span>
+                        <span>View Engines</span>
+                    </div>
+                </article>
+                <article class="skill-card reveal">
+                    <h3>Languages</h3>
+                    <div class="skill-tags">
+                        <span>JavaScript</span>
+                        <span>TypeScript</span>
+                        <span>C++</span>
+                        <span>Python</span>
+                    </div>
+                </article>
+                <article class="skill-card reveal">
+                    <h3>Tools & Workflow</h3>
+                    <div class="skill-tags">
+                        <span>Linux</span>
+                        <span>Neovim</span>
+                        <span>Warp Terminal</span>
+                        <span>Git</span>
+                        <span>GitHub</span>
+                        <span>VS Code</span>
+                        <span>Cursor</span>
+                        <span>Copilot</span>
+                        <span>Gemini</span>
+                    </div>
+                </article>
+            </div>
         </section>
 
         <section class="section-shell work-section" id="work">
             <div class="section-heading reveal">
                 <p class="eyebrow">Selected work</p>
-                <h2>Clean layouts, focused interactions, and a responsive system that scales across devices.</h2>
+                <h2>Projects that reflect interactive learning, responsive UI, and practical full-stack building.</h2>
             </div>
             <div class="work-grid">
                 <article class="work-card reveal">
-                    <img src="./images/project-mockup.png" alt="Project mockup" loading="lazy">
+                    <img src="./images/project-mockup.png" alt="Project mockup" loading="lazy" decoding="async">
                     <div>
-                        <h3>Featured Project</h3>
-                        <p>A portfolio-style showcase for UI-heavy product presentation.</p>
+                        <h3>PhysicsLearn</h3>
+                        <p>Interactive learning platform with modern animations, responsive layouts, and performance-aware visuals.</p>
                     </div>
                 </article>
                 <article class="work-card reveal">
-                    <img src="./images/coding-icon.png" alt="Coding icon" loading="lazy">
+                    <img src="./images/coding-icon.png" alt="Coding icon" loading="lazy" decoding="async">
                     <div>
-                        <h3>Responsive UI</h3>
-                        <p>Layouts built to stay readable and balanced on smaller screens.</p>
+                        <h3>CivilEye & Blog Apps</h3>
+                        <p>React and full-stack projects built around real workflows, CRUD, mapping, and structured content systems.</p>
                     </div>
                 </article>
             </div>
@@ -116,7 +168,7 @@
 
     <footer class="site-footer">
         <div class="section-shell footer-inner">
-            <img src="./images/Logo.png" alt="Abuzar RaziQ logo" loading="lazy">
+            <img src="./images/Logo.png" alt="Abuzar RaziQ logo" loading="lazy" decoding="async">
             <p>Copyright © 2026. All rights reserved by Abuzar RaziQ.</p>
         </div>
     </footer>

@@ -4,6 +4,7 @@ const hamMenu = document.querySelector('.ham-menu');
 const navLinks = Array.from(document.querySelectorAll('.nav-panel a'));
 const revealTargets = document.querySelectorAll('.reveal');
 const sections = document.querySelectorAll('main section[id]');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const setNavState = (isOpen) => {
     if (!navPanel || !hamMenu) {
@@ -53,17 +54,21 @@ const navObserver = new IntersectionObserver((entries) => {
 
 sections.forEach((section) => navObserver.observe(section));
 
-const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-            return;
-        }
+if (prefersReducedMotion) {
+    revealTargets.forEach((element) => element.classList.add('is-visible'));
+} else {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+                return;
+            }
 
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.12,
     });
-}, {
-    threshold: 0.18,
-});
 
-revealTargets.forEach((element) => revealObserver.observe(element));
+    revealTargets.forEach((element) => revealObserver.observe(element));
+}
