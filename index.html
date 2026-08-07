@@ -1,177 +1,862 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abuzar RaziQ</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Abuzar RaziQ — backend software engineer focused on Node.js, TypeScript, MongoDB, authentication, hashing, validation and clean architecture."
+    />
+    <meta name="theme-color" content="#05060f" />
+    <title>Abuzar RaziQ · Backend Engineer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://cdn.simpleicons.org" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="bg-orbs" aria-hidden="true">
+      <span class="orb orb-cyan"></span>
+      <span class="orb orb-pink"></span>
+      <span class="orb orb-violet"></span>
+      <span class="orb orb-lime"></span>
+    </div>
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
     <header class="site-header">
-        <nav class="site-nav" aria-label="Primary">
-            <a class="brand" href="#home" aria-label="Abuzar RaziQ home">
-                <img src="./images/Logo.png" alt="Abuzar RaziQ logo" loading="eager" decoding="async" fetchpriority="high">
-            </a>
-            <button class="ham-menu" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div class="nav-panel active" id="primary-nav">
-                <a class="nav-link" href="#home">Home</a>
-                <a class="nav-link" href="#about">About</a>
-                <a class="nav-link" href="#work">Work</a>
-                <a class="nav-link" href="./pages/contact.html">Contact</a>
-            </div>
-            <a class="talk-button" href="./pages/contact.html">Let's talk</a>
-        </nav>
+      <nav class="site-nav" aria-label="Primary">
+        <a class="brand" href="#home" aria-label="Abuzar RaziQ home">
+          <span class="brand-mark">AR</span>
+          <span class="brand-text">Abuzar<em>.</em></span>
+        </a>
+
+        <button
+          class="ham-menu"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-panel active" id="primary-nav">
+          <a class="nav-link" href="#home">Home</a>
+          <a class="nav-link" href="#about">About</a>
+          <a class="nav-link" href="#skills">Skills</a>
+          <a class="nav-link" href="#projects">Projects</a>
+          <a class="nav-link" href="./pages/contact.html">Contact</a>
+        </div>
+
+        <a class="btn btn-primary talk-button" href="./pages/contact.html"
+          >Let's talk</a
+        >
+      </nav>
     </header>
 
     <main>
-        <section class="hero section-shell" id="home">
-            <div class="hero-copy reveal">
-                <p class="eyebrow">MERN Stack Developer</p>
-                <h1>Abuzar RaziQ</h1>
-                <p class="hero-text">I build responsive, production-minded web experiences with React, Node.js, Express, and MongoDB, focused on speed, clarity, and smooth interaction.</p>
-                <div class="hero-actions">
-                    <a class="primary-action" href="#work">View work</a>
-                    <a class="secondary-action" href="#about">About me</a>
-                </div>
-            </div>
-            <div class="hero-card reveal">
-                <div class="hero-image-wrap">
-                    <img src="./images/profileimg.jpg" alt="Portrait of Abuzar RaziQ" loading="eager" decoding="async" fetchpriority="high">
-                </div>
-                <div class="hero-card-copy">
-                    <p class="card-label">Hostel City, Islamabad</p>
-                    <p>MERN stack developer, CS student, and fast learner who enjoys practical systems and clean UI.</p>
-                </div>
-            </div>
-        </section>
+      <section class="hero section-shell" id="home">
+        <div class="hero-copy reveal">
+          <p class="chip chip-cyan">
+            <span class="pulse-dot"></span>
+            Open to work &mdash; Backend Engineer
+          </p>
 
-        <section class="section-shell strip reveal" aria-label="Highlights">
-            <div>
-                <span>React</span>
-                <p>Frontend interfaces and reusable components</p>
-            </div>
-            <div>
-                <span>Node</span>
-                <p>Express APIs, MongoDB, and server-side logic</p>
-            </div>
-            <div>
-                <span>Linux</span>
-                <p>Efficient workflow with Neovim, Warp, Git, and Copilot</p>
-            </div>
-        </section>
+          <h1 class="hero-title">
+            Hi, I'm <span class="gradient-text">Abuzar RaziQ</span>
+          </h1>
 
-        <section class="section-shell info-grid" id="about">
-            <article class="info-card reveal">
-                <img src="./images/signature.png" alt="Signature" loading="lazy" decoding="async">
-                <h2>Professional Summary</h2>
-                <p>Enthusiastic MERN Stack Developer and Computer Science student with a strong focus on continuous learning, adaptability, and real-world problem solving.</p>
-            </article>
-            <article class="info-card reveal">
-                <img src="./images/gfonts.png" alt="Technology illustration" loading="lazy" decoding="async">
-                <h2>Learning Workflow</h2>
-                <p>Optimized for efficient work using Linux, Neovim, Warp Terminal, VS Code, Cursor, GitHub Copilot, and Gemini.</p>
-            </article>
-            <article class="info-card reveal">
-                <img src="./images/contact-icons.png" alt="Contact illustration" loading="lazy" decoding="async">
-                <h2>Open To Work</h2>
-                <p>Available for junior developer and internship roles, including growth-focused paid or unpaid opportunities.</p>
-            </article>
-        </section>
+          <p class="hero-text">
+            I engineer
+            <span class="hl hl-cyan">secure, scalable backends</span> with
+            Node.js, TypeScript &amp; MongoDB &mdash; and I care deeply about
+            the details: <span class="hl hl-pink">authentication</span>,
+            <span class="hl hl-violet">hashing</span>,
+            <span class="hl hl-lime">validation</span> and clean schemas.
+          </p>
 
-        <section class="section-shell work-section" aria-labelledby="skills-heading">
-            <div class="section-heading reveal">
-                <p class="eyebrow">Technical skills</p>
-                <h2 id="skills-heading">A practical stack built around modern web development, efficient tooling, and steady learning.</h2>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#projects">
+              View projects <i class="fa-solid fa-arrow-down"></i>
+            </a>
+            <a class="btn btn-ghost btn-lg" href="#about">About me</a>
+            <div class="hero-social">
+              <a
+                href="https://github.com/"
+                target="_blank"
+                rel="noopener"
+                aria-label="GitHub"
+                title="GitHub"
+              >
+                <img
+                  src="https://cdn.simpleicons.org/github/f2f5ff"
+                  alt=""
+                  width="18"
+                  height="18"
+                  loading="lazy"
+                />
+              </a>
+              <a
+                href="https://linkedin.com/"
+                target="_blank"
+                rel="noopener"
+                aria-label="LinkedIn"
+                title="LinkedIn"
+              >
+                <img
+                  src="https://cdn.simpleicons.org/linkedin/60a5fa"
+                  alt=""
+                  width="18"
+                  height="18"
+                  loading="lazy"
+                />
+              </a>
+              <a
+                href="mailto:labuzarraziq@gmail.com"
+                aria-label="Email"
+                title="Email"
+              >
+                <i class="fa-solid fa-envelope"></i>
+              </a>
             </div>
-            <div class="skills-grid">
-                <article class="skill-card reveal">
-                    <h3>Frontend</h3>
-                    <div class="skill-tags">
-                        <span>React.js</span>
-                        <span>HTML5</span>
-                        <span>CSS3</span>
-                        <span>Tailwind CSS</span>
-                        <span>Vanilla JavaScript</span>
-                    </div>
-                </article>
-                <article class="skill-card reveal">
-                    <h3>Backend</h3>
-                    <div class="skill-tags">
-                        <span>Node.js</span>
-                        <span>Express.js</span>
-                        <span>MongoDB</span>
-                        <span>Mongoose</span>
-                        <span>View Engines</span>
-                    </div>
-                </article>
-                <article class="skill-card reveal">
-                    <h3>Languages</h3>
-                    <div class="skill-tags">
-                        <span>JavaScript</span>
-                        <span>TypeScript</span>
-                        <span>C++</span>
-                        <span>Python</span>
-                    </div>
-                </article>
-                <article class="skill-card reveal">
-                    <h3>Tools & Workflow</h3>
-                    <div class="skill-tags">
-                        <span>Linux</span>
-                        <span>Neovim</span>
-                        <span>Warp Terminal</span>
-                        <span>Git</span>
-                        <span>GitHub</span>
-                        <span>VS Code</span>
-                        <span>Cursor</span>
-                        <span>Copilot</span>
-                        <span>Gemini</span>
-                    </div>
-                </article>
-            </div>
-        </section>
+          </div>
 
-        <section class="section-shell work-section" id="work">
-            <div class="section-heading reveal">
-                <p class="eyebrow">Selected work</p>
-                <h2>Projects that reflect interactive learning, responsive UI, and practical full-stack building.</h2>
+          <div class="hero-stats">
+            <div class="stat-chip">
+              <i class="fa-solid fa-server"></i>
+              <strong>Backend</strong>
+              <span>Node · Express · Mongo</span>
             </div>
-            <div class="work-grid">
-                <article class="work-card reveal">
-                    <img src="./images/project-mockup.png" alt="Project mockup" loading="lazy" decoding="async">
-                    <div>
-                        <h3>PhysicsLearn</h3>
-                        <p>Interactive learning platform with modern animations, responsive layouts, and performance-aware visuals.</p>
-                    </div>
-                </article>
-                <article class="work-card reveal">
-                    <img src="./images/coding-icon.png" alt="Coding icon" loading="lazy" decoding="async">
-                    <div>
-                        <h3>CivilEye & Blog Apps</h3>
-                        <p>React and full-stack projects built around real workflows, CRUD, mapping, and structured content systems.</p>
-                    </div>
-                </article>
+            <div class="stat-chip">
+              <i class="fa-solid fa-shield-halved"></i>
+              <strong>Security</strong>
+              <span>Auth · Hashing · Validation</span>
             </div>
-        </section>
+            <div class="stat-chip">
+              <i class="fa-solid fa-terminal"></i>
+              <strong>Setup</strong>
+              <span>Arch · Neovim · Ghostty</span>
+            </div>
+          </div>
+        </div>
 
-        <section class="section-shell contact-cta reveal">
-            <div>
-                <p class="eyebrow">Let’s build</p>
-                <h2>A smoother, cleaner portfolio experience starts with better structure and consistent spacing.</h2>
+        <div class="hero-visual reveal tilt" data-tilt="12">
+          <div class="profile-blob"></div>
+          <div class="profile-card">
+            <div class="profile-photo">
+              <img
+                src="./images/profileimg.jpg"
+                alt="Portrait of Abuzar RaziQ"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              />
             </div>
-            <a class="primary-action" href="./pages/contact.html">Open contact page</a>
-        </section>
+            <div class="profile-card-body">
+              <h3>Abuzar RaziQ</h3>
+              <p>
+                <i class="fa-solid fa-graduation-cap"></i> BSc Computer Science
+              </p>
+              <div class="profile-tags">
+                <span
+                  ><i class="fa-solid fa-location-dot"></i> Islamabad, PK</span
+                >
+                <span><i class="fa-solid fa-brain"></i> AI enthusiast</span>
+              </div>
+            </div>
+          </div>
+
+          <span class="float-badge fb-node">
+            <img
+              src="https://cdn.simpleicons.org/nodedotjs/5fa04e"
+              alt="Node.js"
+              width="26"
+              height="26"
+              loading="lazy"
+            />
+          </span>
+          <span class="float-badge fb-ts">
+            <img
+              src="https://cdn.simpleicons.org/typescript/3178c6"
+              alt="TypeScript"
+              width="26"
+              height="26"
+              loading="lazy"
+            />
+          </span>
+          <span class="float-badge fb-mongo">
+            <img
+              src="https://cdn.simpleicons.org/mongodb/47a248"
+              alt="MongoDB"
+              width="26"
+              height="26"
+              loading="lazy"
+            />
+          </span>
+          <span class="float-badge fb-socket">
+            <i class="fa-solid fa-bolt"></i>
+          </span>
+        </div>
+      </section>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>Node.js</span><i class="tick-dot"></i> <span>TypeScript</span
+          ><i class="tick-dot"></i> <span>Express</span><i class="tick-dot"></i>
+          <span>MongoDB</span><i class="tick-dot"></i> <span>Mongoose</span
+          ><i class="tick-dot"></i> <span>WebSockets</span
+          ><i class="tick-dot"></i> <span>Authentication</span
+          ><i class="tick-dot"></i> <span>Hashing</span><i class="tick-dot"></i>
+          <span>Validation</span><i class="tick-dot"></i>
+          <span>Sanitization</span><i class="tick-dot"></i>
+          <span>REST APIs</span><i class="tick-dot"></i> <span>JWT</span
+          ><i class="tick-dot"></i> <span>Neovim</span><i class="tick-dot"></i>
+          <span>Arch Linux</span><i class="tick-dot"></i> <span>KDE Plasma</span
+          ><i class="tick-dot"></i> <span>Ghostty</span><i class="tick-dot"></i>
+          <span>Git &amp; GitHub</span><i class="tick-dot"></i>
+          <span>Python</span><i class="tick-dot"></i> <span>C++</span
+          ><i class="tick-dot"></i> <span>React</span><i class="tick-dot"></i>
+          <span>Tailwind CSS</span><i class="tick-dot"></i>
+          <span>AI &amp; LLMs</span><i class="tick-dot"></i> <span>Node.js</span
+          ><i class="tick-dot"></i> <span>TypeScript</span
+          ><i class="tick-dot"></i> <span>Express</span><i class="tick-dot"></i>
+          <span>MongoDB</span><i class="tick-dot"></i> <span>Mongoose</span
+          ><i class="tick-dot"></i> <span>WebSockets</span
+          ><i class="tick-dot"></i> <span>Authentication</span
+          ><i class="tick-dot"></i> <span>Hashing</span><i class="tick-dot"></i>
+          <span>Validation</span><i class="tick-dot"></i>
+          <span>Sanitization</span><i class="tick-dot"></i>
+          <span>REST APIs</span><i class="tick-dot"></i> <span>JWT</span
+          ><i class="tick-dot"></i> <span>Neovim</span><i class="tick-dot"></i>
+          <span>Arch Linux</span><i class="tick-dot"></i> <span>KDE Plasma</span
+          ><i class="tick-dot"></i> <span>Ghostty</span><i class="tick-dot"></i>
+          <span>Git &amp; GitHub</span><i class="tick-dot"></i>
+          <span>Python</span><i class="tick-dot"></i> <span>C++</span
+          ><i class="tick-dot"></i> <span>React</span><i class="tick-dot"></i>
+          <span>Tailwind CSS</span><i class="tick-dot"></i>
+          <span>AI &amp; LLMs</span><i class="tick-dot"></i>
+        </div>
+      </div>
+
+      <section class="section-shell strip" aria-label="Highlights">
+        <article class="glass-card bruta-cyan reveal">
+          <div class="card-icon"><i class="fa-solid fa-server"></i></div>
+          <h3>Backend-first</h3>
+          <p>
+            Scalable REST APIs and real-time systems with Node.js, Express and
+            MongoDB &mdash; structured around clean Mongoose models and schemas.
+          </p>
+        </article>
+        <article class="glass-card bruta-pink reveal">
+          <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3>Security-obsessed</h3>
+          <p>
+            Passwords hashed, inputs validated and sanitized, tokens guarded.
+            Security is never an afterthought in my code.
+          </p>
+        </article>
+        <article class="glass-card bruta-violet reveal">
+          <div class="card-icon"><i class="fa-solid fa-terminal"></i></div>
+          <h3>Keyboard-driven setup</h3>
+          <p>
+            Arch + KDE Plasma, Neovim and Ghostty. A fast, focused workflow
+            tuned for deep engineering sessions.
+          </p>
+        </article>
+      </section>
+
+      <section class="section-shell about-section" id="about">
+        <div class="section-heading reveal">
+          <p class="eyebrow eyebrow-cyan">
+            <i class="fa-solid fa-code"></i> About me
+          </p>
+          <h2>
+            An engineer who loves
+            <span class="gradient-text">building</span> and
+            <span class="gradient-text">learning</span>.
+          </h2>
+        </div>
+
+        <div class="info-grid">
+          <article class="glass-card bruta-lime reveal">
+            <div class="card-icon"><i class="fa-solid fa-user-gear"></i></div>
+            <h3>Professional Summary</h3>
+            <p>
+              Backend-focused software engineer and Computer Science undergrad.
+              I build production-minded APIs in Node.js and TypeScript, with a
+              sharp eye for security, data integrity and clean, maintainable
+              code.
+            </p>
+            <p class="card-foot">Node.js · TypeScript · MongoDB</p>
+          </article>
+          <article class="glass-card bruta-yellow reveal">
+            <div class="card-icon">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+            </div>
+            <h3>Continuous Learner</h3>
+            <p>
+              A fast adopter of new technology. I spend my time on AI and LLMs,
+              engineering podcasts and open-source tooling &mdash; always
+              picking up something that makes the next project better.
+            </p>
+            <p class="card-foot">AI · Podcasts · Open source</p>
+          </article>
+          <article class="glass-card bruta-orange reveal">
+            <div class="card-icon"><i class="fa-solid fa-handshake"></i></div>
+            <h3>Open To Work</h3>
+            <p>
+              Looking for junior backend and Node.js roles and freelance
+              opportunities &mdash; where I can ship real systems and grow fast.
+            </p>
+            <p class="card-foot">Remote · On-site · Islamabad</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-shell skills-section" id="skills">
+        <div class="section-heading reveal">
+          <p class="eyebrow eyebrow-violet">
+            <i class="fa-solid fa-microchip"></i> Technical skills
+          </p>
+          <h2>
+            A stack built for <span class="gradient-text">backend depth</span>,
+            with everything needed to ship.
+          </h2>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-card glass-card bruta-cyan reveal">
+            <header class="skill-head">
+              <div class="card-icon">
+                <img
+                  src="https://cdn.simpleicons.org/nodedotjs/5fa04e"
+                  alt=""
+                  width="26"
+                  height="26"
+                  loading="lazy"
+                />
+              </div>
+              <h3>Backend &amp; API</h3>
+            </header>
+            <div class="skill-tags">
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/nodedotjs/5fa04e"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                Node.js</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/express/f2f5ff"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                Express</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/typescript/3178c6"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                TypeScript</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-plug"></i> WebSockets</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-gears"></i> REST APIs</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-boxes-stacked"></i> npm utilities</span
+              >
+            </div>
+          </article>
+
+          <article class="skill-card glass-card bruta-pink reveal">
+            <header class="skill-head">
+              <div class="card-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <h3>Security &amp; Data</h3>
+            </header>
+            <div class="skill-tags">
+              <span class="tag"
+                ><i class="fa-solid fa-lock"></i> Authentication</span
+              >
+              <span class="tag"><i class="fa-solid fa-key"></i> Hashing</span>
+              <span class="tag"><i class="fa-solid fa-id-badge"></i> JWT</span>
+              <span class="tag"
+                ><i class="fa-solid fa-circle-check"></i> Validation</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-broom"></i> Sanitization</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/mongodb/47a248"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                MongoDB</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-database"></i> Mongoose</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-layer-group"></i> Models &amp;
+                Schemas</span
+              >
+            </div>
+          </article>
+
+          <article class="skill-card glass-card bruta-violet reveal">
+            <header class="skill-head">
+              <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+              <h3>Languages</h3>
+            </header>
+            <div class="skill-tags">
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/javascript/f7df1e"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                JavaScript</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/typescript/3178c6"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                TypeScript</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/python/3776ab"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                Python</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/cplusplus/00599c"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                C++</span
+              >
+              <span class="tag"><i class="fa-solid fa-cubes"></i> OOP</span>
+              <span class="tag"
+                ><i class="fa-solid fa-sitemap"></i> DSA &amp; Algorithms</span
+              >
+            </div>
+          </article>
+
+          <article class="skill-card glass-card bruta-lime reveal">
+            <header class="skill-head">
+              <div class="card-icon">
+                <img
+                  src="https://cdn.simpleicons.org/react/61dafb"
+                  alt=""
+                  width="26"
+                  height="26"
+                  loading="lazy"
+                />
+              </div>
+              <h3>Frontend</h3>
+            </header>
+            <div class="skill-tags">
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/html5/e34f26"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                HTML5</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/css3/1572b6"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                CSS3</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-bolt"></i> Vanilla JS</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/react/61dafb"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                React</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/tailwindcss/38bdf8"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                Tailwind CSS</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-mobile-screen-button"></i> Responsive
+                UI</span
+              >
+            </div>
+          </article>
+
+          <article class="skill-card glass-card bruta-yellow reveal">
+            <header class="skill-head">
+              <div class="card-icon"><i class="fa-solid fa-terminal"></i></div>
+              <h3>Tools &amp; Workflow</h3>
+            </header>
+            <div class="skill-tags">
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/archlinux/1793d1"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                Arch Linux</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/kde/1d99f3"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                KDE Plasma</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/neovim/57a143"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                Neovim</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-terminal"></i> Ghostty / Kitty</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/git/f05032"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                Git</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/github/f2f5ff"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                GitHub</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/visualstudiocode/007acc"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                VS Code</span
+              >
+              <span class="tag"
+                ><img
+                  src="https://cdn.simpleicons.org/vercel/f2f5ff"
+                  alt=""
+                  width="14"
+                  height="14"
+                  loading="lazy"
+                />
+                Vercel</span
+              >
+            </div>
+          </article>
+
+          <article class="skill-card glass-card bruta-orange reveal">
+            <header class="skill-head">
+              <div class="card-icon"><i class="fa-solid fa-brain"></i></div>
+              <h3>Interests &amp; Growth</h3>
+            </header>
+            <div class="skill-tags">
+              <span class="tag"
+                ><i class="fa-solid fa-robot"></i> Artificial Intelligence</span
+              >
+              <span class="tag"><i class="fa-solid fa-comments"></i> LLMs</span>
+              <span class="tag"
+                ><i class="fa-solid fa-rocket"></i> Continuous learning</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-podcast"></i> Tech podcasts</span
+              >
+              <span class="tag"
+                ><i class="fa-solid fa-diagram-project"></i> Engineering
+                deep-dives</span
+              >
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-shell projects-section" id="projects">
+        <div class="section-heading reveal">
+          <p class="eyebrow eyebrow-pink">
+            <i class="fa-solid fa-layer-group"></i> Projects
+          </p>
+          <h2>
+            Things I've <span class="gradient-text">built</span> while learning
+            and shipping.
+          </h2>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card glass-card bruta-cyan reveal">
+            <div class="project-top">
+              <div class="card-icon"><i class="fa-solid fa-comments"></i></div>
+              <span class="project-badge">Backend · Real-time</span>
+            </div>
+            <h3>The Chat Application</h3>
+            <p>
+              A real-time chat platform built on WebSockets with JWT
+              authentication, hashed credentials and a smooth, instant message
+              flow.
+            </p>
+            <div class="skill-tags project-tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express</span>
+              <span class="tag">WebSockets</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">JWT</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost btn-sm" href="#"
+                ><i class="fa-brands fa-github"></i> Repo</a
+              >
+              <a class="btn btn-ghost btn-sm" href="#"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a
+              >
+            </div>
+          </article>
+
+          <article class="project-card glass-card bruta-pink reveal">
+            <div class="project-top">
+              <div class="card-icon">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+              <span class="project-badge">Backend · CRUD API</span>
+            </div>
+            <h3>Task Manager API</h3>
+            <p>
+              A production-minded REST API with full CRUD, user authentication,
+              strict validation and sanitization, and clean Mongoose models and
+              schemas.
+            </p>
+            <div class="skill-tags project-tags">
+              <span class="tag">TypeScript</span>
+              <span class="tag">Express</span>
+              <span class="tag">Mongoose</span>
+              <span class="tag">Validation</span>
+              <span class="tag">JWT</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost btn-sm" href="#"
+                ><i class="fa-brands fa-github"></i> Repo</a
+              >
+              <a class="btn btn-ghost btn-sm" href="#"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a
+              >
+            </div>
+          </article>
+
+          <article class="project-card glass-card bruta-violet reveal">
+            <div class="project-top">
+              <div class="card-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </div>
+              <span class="project-badge">Backend · Ecommerce</span>
+            </div>
+            <h3>Ecommerce API</h3>
+            <p>
+              A scalable ecommerce backend with products, carts and orders,
+              role-based access control and secure flows built around layered
+              middleware.
+            </p>
+            <div class="skill-tags project-tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">RBAC</span>
+              <span class="tag">Sanitization</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost btn-sm" href="#"
+                ><i class="fa-brands fa-github"></i> Repo</a
+              >
+              <a class="btn btn-ghost btn-sm" href="#"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a
+              >
+            </div>
+          </article>
+
+          <article class="project-card glass-card bruta-lime reveal">
+            <div class="project-top">
+              <div class="card-icon"><i class="fa-solid fa-globe"></i></div>
+              <span class="project-badge">Full-stack</span>
+            </div>
+            <h3>Blog &amp; CivilEye Apps</h3>
+            <p>
+              Full-stack React apps built around real workflows &mdash; CRUD,
+              mapping, structured content and responsive interfaces backed by
+              clean APIs.
+            </p>
+            <div class="skill-tags project-tags">
+              <span class="tag">React</span>
+              <span class="tag">Express</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">Tailwind CSS</span>
+              <span class="tag">Vercel</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost btn-sm" href="#"
+                ><i class="fa-brands fa-github"></i> Repo</a
+              >
+              <a class="btn btn-ghost btn-sm" href="#"
+                ><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a
+              >
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-shell contact-cta reveal">
+        <div class="cta-copy">
+          <p class="eyebrow eyebrow-cyan">
+            <i class="fa-solid fa-paper-plane"></i> Let's build
+          </p>
+          <h2>Have a backend idea, a role, or just want to talk tech?</h2>
+          <p>
+            Let's talk about APIs, architecture, AI &mdash; or anything that
+            ships good software.
+          </p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-primary btn-lg" href="./pages/contact.html"
+            >Get in touch <i class="fa-solid fa-arrow-up-right-from-square"></i
+          ></a>
+          <a class="btn btn-ghost btn-lg" href="mailto:labuzarraziq@gmail.com"
+            ><i class="fa-solid fa-envelope"></i> labuzarraziq@gmail.com</a
+          >
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
-        <div class="section-shell footer-inner">
-            <img src="./images/Logo.png" alt="Abuzar RaziQ logo" loading="lazy" decoding="async">
-            <p>Copyright © 2026. All rights reserved by Abuzar RaziQ.</p>
+      <div class="section-shell footer-inner">
+        <div class="footer-brand">
+          <span class="brand-mark">AR</span>
+          <p>Abuzar RaziQ &mdash; Backend Engineer</p>
         </div>
+        <div class="footer-social">
+          <a
+            href="https://github.com/"
+            target="_blank"
+            rel="noopener"
+            aria-label="GitHub"
+          >
+            <img
+              src="https://cdn.simpleicons.org/github/f2f5ff"
+              alt=""
+              width="18"
+              height="18"
+              loading="lazy"
+            />
+          </a>
+          <a
+            href="https://linkedin.com/"
+            target="_blank"
+            rel="noopener"
+            aria-label="LinkedIn"
+          >
+            <img
+              src="https://cdn.simpleicons.org/linkedin/60a5fa"
+              alt=""
+              width="18"
+              height="18"
+              loading="lazy"
+            />
+          </a>
+          <a href="mailto:labuzarraziq@gmail.com" aria-label="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+        </div>
+        <p class="footer-copy">
+          Copyright © 2026. All rights reserved by Abuzar RaziQ.
+        </p>
+      </div>
     </footer>
+
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>
