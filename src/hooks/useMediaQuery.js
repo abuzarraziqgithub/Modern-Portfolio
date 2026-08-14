@@ -18,4 +18,4 @@ export function useMediaQuery(query) {
 
 export const useIsCoarsePointer = () => useMediaQuery('(pointer: coarse)');
 export const useReducedMotion = () => useMediaQuery('(prefers-reduced-motion: reduce)');
-export const useIsMobile = () => useMediaQuery('(max-width: 768px)');
+export const useIsMobile = () => useMediaQuery('(max-width: 767.98px)');

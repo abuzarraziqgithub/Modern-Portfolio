@@ -186,6 +186,7 @@ export const PROJECTS = [
     title: 'The Chat Application',
     text: 'A real-time chat platform built on WebSockets with JWT authentication, hashed credentials and a smooth, instant message flow.',
     tags: ['Node.js', 'Express', 'WebSockets', 'MongoDB', 'JWT'],
+    repo: 'https://github.com/abuzarraziqgithub',
   },
   {
     icon: 'listcheck',
@@ -194,6 +195,7 @@ export const PROJECTS = [
     title: 'Task Manager API',
     text: 'A production-minded REST API with full CRUD, user authentication, strict validation and sanitization, and clean Mongoose models and schemas.',
     tags: ['TypeScript', 'Express', 'Mongoose', 'Validation', 'JWT'],
+    repo: 'https://github.com/abuzarraziqgithub',
   },
   {
     icon: 'cart',
@@ -202,6 +204,7 @@ export const PROJECTS = [
     title: 'Ecommerce API',
     text: 'A scalable ecommerce backend with products, carts and orders, role-based access control and secure flows built around layered middleware.',
     tags: ['Node.js', 'Express', 'MongoDB', 'RBAC', 'Sanitization'],
+    repo: 'https://github.com/abuzarraziqgithub',
   },
   {
     icon: 'globe',
@@ -210,6 +213,7 @@ export const PROJECTS = [
     title: 'Blog & CivilEye Apps',
     text: 'Full-stack React apps built around real workflows — CRUD, mapping, structured content and responsive interfaces backed by clean APIs.',
     tags: ['React', 'Express', 'MongoDB', 'Tailwind CSS', 'Vercel'],
+    repo: 'https://github.com/abuzarraziqgithub',
   },
 ];
 

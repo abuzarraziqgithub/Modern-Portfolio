@@ -1,14 +1,12 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-bg0: #05060f;
-  --color-bg1: #0a0c1c;
-  --color-bg2: #10132b;
-  --color-panel: rgba(19, 22, 46, 0.55);
-  --color-panelstrong: rgba(24, 28, 58, 0.78);
-  --color-ink: #f2f5ff;
-  --color-muted: #99a2c8;
-  --color-faint: #6b7399;
+  --color-bg0: #070812;
+  --color-bg1: #0b0d1b;
+  --color-bg2: #101228;
+  --color-ink: #eef2ff;
+  --color-muted: #9aa3c7;
+  --color-faint: #6b7396;
   --color-cyan: #22d3ee;
   --color-pink: #f472b6;
   --color-violet: #a78bfa;
@@ -23,9 +21,6 @@
 
   --radius-card: 22px;
   --radius-sm: 14px;
-
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
@@ -40,8 +35,8 @@
     font-family: var(--font-body);
     line-height: 1.65;
     background:
-      radial-gradient(1200px 800px at 85% -10%, rgba(167, 139, 250, 0.16), transparent 55%),
-      radial-gradient(1000px 700px at -10% 20%, rgba(34, 211, 238, 0.13), transparent 55%),
+      radial-gradient(1000px 700px at 85% -10%, rgba(167, 139, 250, 0.13), transparent 55%),
+      radial-gradient(900px 650px at -10% 15%, rgba(34, 211, 238, 0.11), transparent 55%),
       linear-gradient(180deg, var(--color-bg0) 0%, var(--color-bg1) 45%, var(--color-bg2) 100%);
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
@@ -54,12 +49,12 @@
     pointer-events: none;
     z-index: 0;
     background-image:
-      radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 26px 26px, 26px 26px;
     background-position: 0 0, 13px 13px;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6), transparent 80%);
-    opacity: 0.55;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 80%);
+    opacity: 0.5;
   }
 
   a {
@@ -73,7 +68,7 @@
   }
 
   section[id] {
-    scroll-margin-top: 88px;
+    scroll-margin-top: 84px;
   }
 
   ::selection {
@@ -91,13 +86,6 @@
     html {
       scroll-behavior: auto;
     }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
   }
 }
 
@@ -107,43 +95,10 @@
     margin-inline: auto;
   }
 
-  .hero {
-    display: grid;
-    grid-template-columns: 1.12fr 0.88fr;
-    align-items: center;
-    gap: 40px;
-    min-height: calc(100dvh - 80px);
-    padding-top: 20px;
-  }
-
-  .hero-copy {
-    display: grid;
-    gap: 18px;
-    align-content: center;
-  }
-
-  .hero-visual {
-    order: -1;
-    display: grid;
-    place-items: center;
-  }
-
-  @media (max-width: 1040px) {
-    .hero {
-      grid-template-columns: 1fr;
-      gap: 56px;
-      min-height: auto;
-      padding-top: 34px;
-    }
-    .hero-copy {
-      justify-items: start;
-    }
-  }
-
-  @media (min-width: 1041px) {
-    .hero-visual {
-      order: 0;
-    }
+  .bento {
+    border-radius: var(--radius-card);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
   }
 
   .strip,
@@ -152,7 +107,7 @@
   .projects-section,
   .contact-cta,
   .footer-inner {
-    margin-top: 30px;
+    margin-top: 26px;
   }
 }
 
@@ -162,136 +117,16 @@
       110deg,
       var(--color-cyan) 0%,
       var(--color-violet) 40%,
-      var(--color-pink) 70%,
+      var(--color-pink) 72%,
       var(--color-yellow) 100%
     );
-    background-size: 220% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: gradient-shift 7s ease infinite;
-  }
-
-  .glass {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-    border: 2px solid rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
-  }
-
-  .bruta-cyan {
-    box-shadow: 6px 6px 0 0 rgba(34, 211, 238, 0.28);
-  }
-  .bruta-pink {
-    box-shadow: 6px 6px 0 0 rgba(244, 114, 182, 0.3);
-  }
-  .bruta-violet {
-    box-shadow: 6px 6px 0 0 rgba(167, 139, 250, 0.32);
-  }
-  .bruta-lime {
-    box-shadow: 6px 6px 0 0 rgba(163, 230, 53, 0.24);
-  }
-  .bruta-yellow {
-    box-shadow: 6px 6px 0 0 rgba(253, 224, 71, 0.24);
-  }
-  .bruta-orange {
-    box-shadow: 6px 6px 0 0 rgba(251, 146, 60, 0.28);
   }
 
   .mask-fade-x {
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  }
-
-  .will-3d {
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-  }
-}
-
-/* ---------------- Keyframes ---------------- */
-
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes float-a {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(50px, 40px, 0) scale(1.1);
-  }
-}
-
-@keyframes float-b {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1.05);
-  }
-  50% {
-    transform: translate3d(-40px, -50px, 0) scale(0.95);
-  }
-}
-
-@keyframes blob-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pulse-dot {
-  0% {
-    box-shadow: 0 0 0 0 rgba(163, 230, 53, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(163, 230, 53, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(163, 230, 53, 0);
-  }
-}
-
-@keyframes ticker-scroll {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes badge-bob {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(0, -12px, 0);
-  }
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(26px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes card-idle {
-  0%,
-  100% {
-    transform: perspective(900px) rotateX(3deg) rotateY(-5deg);
-  }
-  50% {
-    transform: perspective(900px) rotateX(-2deg) rotateY(4deg);
   }
 }

@@ -3,21 +3,27 @@ import Icon, { TechIcon } from './Icon';
 export function GlassCard({ tone = 'cyan', className = '', children, lift = true }) {
   return (
     <article
-      className={`glass relative rounded-[22px] border p-[26px] transition-transform duration-300 ${tone} ${
-        lift ? 'hover:-translate-x-1 hover:-translate-y-1.5' : ''
-      } ${className}`}
+      className={`bento relative ${lift ? 'transition-colors duration-200 hover:border-white/[0.18]' : ''} ${className}`}
     >
       {children}
     </article>
   );
 }
 
-export function CardIcon({ name, size = 22, className = '' }) {
+const TONES = {
+  cyan: 'text-cyan border-cyan/30 bg-cyan/10',
+  violet: 'text-violet border-violet/30 bg-violet/10',
+  pink: 'text-pink border-pink/30 bg-pink/10',
+  lime: 'text-lime border-lime/30 bg-lime/10',
+  yellow: 'text-yellow border-yellow/30 bg-yellow/10',
+  orange: 'text-orange border-orange/30 bg-orange/10',
+  blue: 'text-blue border-blue/30 bg-blue/10',
+};
+
+export function CardIcon({ name, size = 22, tone = 'cyan', className = '' }) {
+  const fill = TONES[tone] || TONES.cyan;
   return (
-    <div
-      className={`mb-4 grid h-14 w-14 place-items-center rounded-2xl border-2 shadow-[3px_3px_0_0_rgba(0,0,0,0.4)] ${className}`}
-      style={{ background: 'rgba(255,255,255,0.07)', borderColor: 'rgba(255,255,255,0.14)' }}
-    >
+    <div className={`grid h-12 w-12 place-items-center rounded-2xl border ${fill} ${className}`}>
       <Icon name={name} size={size} />
     </div>
   );
@@ -32,17 +38,16 @@ export function Button({
   ...rest
 }) {
   const base =
-    'inline-flex items-center justify-center gap-2 rounded-[14px] font-display font-bold border-2 border-white/[0.14] cursor-pointer select-none transition-[transform,box-shadow,background,color] duration-300';
+    'inline-flex items-center justify-center gap-2 rounded-xl font-display font-bold cursor-pointer select-none transition-colors duration-200';
   const sizes = {
-    sm: 'px-4 py-2.5 text-sm',
-    md: 'px-[22px] py-[13px]',
-    lg: 'px-[26px] py-[15px] text-[1.02rem]',
+    sm: 'px-4 py-2 text-sm',
+    md: 'px-5 py-2.5 text-[0.95rem]',
+    lg: 'px-6 py-3 text-[1rem]',
   };
   const variants = {
     primary:
-      'text-[#05141c] border-transparent bg-[linear-gradient(135deg,#22d3ee,#a78bfa)] shadow-[4px_4px_0_0_rgba(34,211,238,0.4)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_0_rgba(34,211,238,0.5)] active:translate-x-0.5 active:translate-y-[3px] active:shadow-[2px_2px_0_0_rgba(34,211,238,0.4)]',
-    ghost:
-      'text-ink bg-white/[0.06] backdrop-blur-[10px] shadow-[4px_4px_0_0_rgba(255,255,255,0.14)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-white/[0.11] hover:shadow-[7px_7px_0_0_rgba(255,255,255,0.2)] active:translate-x-0.5 active:translate-y-[3px]',
+      'text-[#04141d] bg-gradient-to-br from-cyan to-violet hover:from-violet hover:to-pink',
+    ghost: 'text-ink border border-white/15 bg-white/[0.05] hover:bg-white/[0.1]',
   };
 
   const cls = `${base} ${sizes[size]} ${variants[variant]} ${className}`;
@@ -66,25 +71,28 @@ export function SectionHeading({ icon, tone = 'cyan', eyebrow, children }) {
     cyan: 'text-cyan',
     violet: 'text-violet',
     pink: 'text-pink',
+    lime: 'text-lime',
+    yellow: 'text-yellow',
+    orange: 'text-orange',
   };
   return (
-    <div className="mb-[22px] grid gap-[14px]">
-      <p className={`font-mono text-[0.78rem] font-extrabold uppercase tracking-[0.22em] ${toneText[tone]}`}>
+    <div className="mb-5 grid gap-2.5">
+      <p className={`font-mono text-[0.78rem] font-extrabold uppercase tracking-[0.22em] ${toneText[tone] || toneText.cyan}`}>
         <Icon name={icon} size={14} className="mr-2 inline-block" />
         {eyebrow}
       </p>
-      <h2 className="max-w-[18ch] font-display text-[clamp(1.9rem,4.6vw,3.3rem)] font-bold leading-[1.05] tracking-tight">
+      <h2 className="max-w-[20ch] font-display text-[clamp(1.8rem,4.5vw,3rem)] font-bold leading-[1.08] tracking-tight">
         {children}
       </h2>
     </div>
   );
 }
 
-export function Tag({ children, img }) {
+export function Tag({ children, img, tone = '' }) {
   return (
-    <span className="inline-flex items-center gap-[7px] rounded-full border-[1.5px] bg-white/[0.07] px-3 py-[7px] text-[0.84rem] font-semibold text-ink transition-transform duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:shadow-[3px_3px_0_0_rgba(0,0,0,0.4)]">
+    <span className="inline-flex items-center gap-[7px] rounded-full border border-white/10 bg-white/[0.05] px-3 py-[7px] text-[0.82rem] font-semibold text-ink">
       {img ? <TechIcon {...img} size={14} /> : null}
-      {children}
+      {tone ? <span className={`mr-0.5 ${tone}`}>{children}</span> : children}
     </span>
   );
 }
@@ -95,7 +103,7 @@ export function SkillTag({ tag }) {
   }
   return (
     <Tag>
-      <Icon name={tag.icon} size={13} className="shrink-0" />
+      <Icon name={tag.icon} size={13} className="shrink-0 text-faint" />
       {tag.label}
     </Tag>
   );

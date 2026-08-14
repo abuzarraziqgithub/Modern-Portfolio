@@ -1,126 +1,172 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Check } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Loader2, AlertCircle, MailOpen } from 'lucide-react';
 import { GlassCard, CardIcon } from '../components/ui';
-import Icon, { TechIcon } from '../components/Icon';
-import Reveal from '../components/Reveal';
+import Icon, { Github, Linkedin } from '../components/Icon';
 import { LINKS } from '../data/portfolio';
 
 const CONTACTS = [
-  { icon: Mail, label: 'Email', value: 'iabuzarraziq@gmail.com', href: LINKS.email },
-  { icon: Phone, label: 'Phone', value: '+923276088249', href: LINKS.phone },
-  { icon: MapPin, label: 'Location', value: 'Islamabad, Pakistan' },
+  { icon: Mail, label: 'Email', value: 'iabuzarraziq@gmail.com', href: LINKS.email, tone: 'text-cyan border-cyan/30 bg-cyan/10' },
+  { icon: Phone, label: 'Phone', value: '+92 327 6088249', href: LINKS.phone, tone: 'text-violet border-violet/30 bg-violet/10' },
+  { icon: MapPin, label: 'Location', value: 'Islamabad, Pakistan', tone: 'text-pink border-pink/30 bg-pink/10' },
 ];
 
+const FORM_URL = 'https://formsubmit.co/ajax/iabuzarraziq@gmail.com';
+
 export default function Contact() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState('idle');
+  const [sentTo, setSentTo] = useState('');
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, subject, message } = form;
-    const body = `Name: ${name}%0AEmail: ${email}%0ASubject: ${subject || 'N/A'}%0A%0A${encodeURIComponent(message)}`;
-    window.location.href = `mailto:iabuzarraziq@gmail.com?subject=${encodeURIComponent(subject || 'Portfolio message')}&body=${body}`;
-    setSent(true);
-    setTimeout(() => setSent(false), 6000);
+    setStatus('sending');
+    try {
+      const res = await fetch(FORM_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.subject || 'Portfolio message',
+          message: form.message,
+          _subject: `Portfolio message from ${form.name}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+      if (!res.ok) throw new Error('Send failed');
+      setSentTo(form.email);
+      setStatus('success');
+      setForm({ name: '', email: '', subject: '', message: '' });
+    } catch {
+      setStatus('error');
+    }
   };
 
+  const mailtoFallback = `mailto:iabuzarraziq@gmail.com?subject=${encodeURIComponent(
+    form.subject || 'Portfolio message'
+  )}&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`;
+
   const inputCls =
-    'w-full rounded-2xl border-2 border-white/[0.14] bg-white/[0.05] px-[18px] py-[15px] text-ink outline-none transition-all duration-300 placeholder:text-faint focus:border-cyan/80 focus:-translate-y-px focus:shadow-[4px_4px_0_0_rgba(34,211,238,0.25)]';
+    'w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-ink outline-none transition-colors duration-200 placeholder:text-faint focus:border-cyan/70 focus:bg-white/[0.06]';
 
   return (
-    <main className="pt-[18px]">
-      <div className="section-shell grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-        <Reveal className="h-full">
-          <GlassCard tone="bruta-violet" className="grid h-full content-start gap-5 rounded-[26px] p-[24px] sm:p-[30px]">
-            <p className="font-mono text-[0.78rem] font-extrabold uppercase tracking-[0.22em] text-violet">
-              <Icon name="send" size={14} className="mr-2 inline-block" /> Contact
-            </p>
-            <h1 className="max-w-[14ch] font-display text-[clamp(2.1rem,5vw,3.4rem)] font-bold leading-[1.05] tracking-tight">
-              Let's build something <span className="gradient-text">worth shipping</span>.
-            </h1>
-            <p className="max-w-[42ch] text-[0.98rem] text-muted">
-              Roles, freelance work, or just talking about APIs, AI and architecture &mdash; my
-              inbox is open.
-            </p>
+    <main className="pt-6 pb-2">
+      <div className="section-shell grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+        <GlassCard className="grid h-full content-start gap-5 p-6 sm:p-7">
+          <p className="font-mono text-[0.78rem] font-extrabold uppercase tracking-[0.22em] text-violet">
+            <Icon name="send" size={14} className="mr-2 inline-block" /> Contact
+          </p>
+          <h1 className="max-w-[14ch] font-display text-[clamp(2rem,4.8vw,3.2rem)] font-bold leading-[1.06] tracking-tight">
+            Let&rsquo;s build something{' '}
+            <span className="gradient-text">worth shipping</span>.
+          </h1>
+          <p className="max-w-[42ch] text-[0.97rem] text-muted">
+            Roles, freelance work, or just talking about <span className="font-bold text-cyan">APIs</span>,{' '}
+            <span className="font-bold text-violet">AI</span> and{' '}
+            <span className="font-bold text-pink">architecture</span> &mdash; my inbox is open.
+          </p>
 
-            <div className="mt-1.5 grid gap-3">
-              {CONTACTS.map((c) => {
-                const inner = (
-                  <>
-                    <span className="grid h-11 w-11 flex-none place-items-center rounded-xl border-[1.5px] border-white/[0.14] text-violet" style={{ background: 'rgba(167,139,250,0.14)' }}>
-                      <c.icon size={18} />
+          <div className="grid gap-3">
+            {CONTACTS.map((c) => {
+              const inner = (
+                <>
+                  <span className={`grid h-11 w-11 flex-none place-items-center rounded-xl border ${c.tone}`}>
+                    <c.icon size={18} />
+                  </span>
+                  <div>
+                    <span className="font-mono text-[0.72rem] font-extrabold uppercase tracking-[0.18em] text-faint">
+                      {c.label}
                     </span>
-                    <div>
-                      <span className="font-mono text-[0.74rem] font-extrabold uppercase tracking-[0.18em] text-violet">
-                        {c.label}
-                      </span>
-                      <strong className="mt-0.5 block break-words text-[1rem] text-ink">
-                        {c.value}
-                      </strong>
-                    </div>
-                  </>
-                );
-                return c.href ? (
-                  <a
-                    key={c.label}
-                    href={c.href}
-                    className="flex items-center gap-[14px] rounded-[18px] border-2 border-white/[0.14] bg-white/[0.06] p-[16px_18px] shadow-[4px_4px_0_0_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-x-0.5 hover:-translate-y-[3px] hover:border-white/25 hover:shadow-[6px_7px_0_0_rgba(167,139,250,0.28)]"
-                  >
-                    {inner}
-                  </a>
-                ) : (
-                  <div
-                    key={c.label}
-                    className="flex items-center gap-[14px] rounded-[18px] border-2 border-white/[0.14] bg-white/[0.06] p-[16px_18px] shadow-[4px_4px_0_0_rgba(0,0,0,0.35)]"
-                  >
-                    {inner}
+                    <strong className="mt-0.5 block break-words text-[0.95rem] text-ink">
+                      {c.value}
+                    </strong>
                   </div>
-                );
-              })}
-            </div>
+                </>
+              );
+              return c.href ? (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  className="bento flex items-center gap-[14px] p-[14px_16px] transition-colors duration-200 hover:border-white/[0.18]"
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div key={c.label} className="bento flex items-center gap-[14px] p-[14px_16px]">
+                  {inner}
+                </div>
+              );
+            })}
+          </div>
 
-            <div className="mt-1.5 flex gap-2.5">
-              <a
-                href={LINKS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="grid h-11 w-11 place-items-center rounded-xl border-2 border-white/[0.14] bg-white/[0.06] shadow-[3px_3px_0_0_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-white/[0.12]"
-              >
-                <TechIcon slug="github" color="f2f5ff" size={18} />
-              </a>
-              <a
-                href={LINKS.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="grid h-11 w-11 place-items-center rounded-xl border-2 border-white/[0.14] bg-white/[0.06] shadow-[3px_3px_0_0_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-white/[0.12]"
-              >
-                <img src="/images/linkedin-icon.png" alt="" width="18" height="18" loading="lazy" />
-              </a>
-            </div>
-          </GlassCard>
-        </Reveal>
+          <div className="mt-1.5 flex gap-2.5">
+            <a
+              href={LINKS.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.05] text-muted transition-colors duration-200 hover:border-white/25 hover:text-ink"
+            >
+              <Github size={18} />
+            </a>
+            <a
+              href={LINKS.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.05] text-muted transition-colors duration-200 hover:border-white/25 hover:text-ink"
+            >
+              <Linkedin size={18} />
+            </a>
+          </div>
+        </GlassCard>
 
-        <Reveal delay={100} className="h-full">
-          <GlassCard tone="bruta-cyan" className="grid content-start rounded-[26px] p-[24px] sm:p-[30px]">
-            <div className="mb-6 flex items-center gap-4">
-              <CardIcon name="message" />
-              <div>
-                <p className="font-mono text-[0.74rem] font-extrabold uppercase tracking-[0.18em] text-cyan">
-                  Quick brief
-                </p>
-                <h2 className="font-display text-[clamp(1.6rem,3.2vw,2.2rem)] font-bold tracking-tight">
-                  Send a message
-                </h2>
-              </div>
+        <GlassCard className="grid content-start p-6 sm:p-7">
+          <div className="mb-5 flex items-center gap-4">
+            <CardIcon name="message" tone="cyan" />
+            <div>
+              <p className="font-mono text-[0.74rem] font-extrabold uppercase tracking-[0.18em] text-cyan">
+                Quick brief
+              </p>
+              <h2 className="font-display text-[clamp(1.5rem,3vw,2rem)] font-bold tracking-tight">
+                Send a message
+              </h2>
             </div>
+          </div>
 
-            <form onSubmit={onSubmit} className="grid gap-4">
+          {status === 'success' && (
+            <div className="mb-4 flex items-start gap-2.5 rounded-xl border border-lime/30 bg-lime/10 p-3.5 text-[0.9rem] text-lime">
+              <CheckCircle2 size={18} className="mt-0.5 flex-none" />
+              <span>
+                  Thanks, your message is on its way! I&rsquo;ll get back to you at{' '}
+                  <strong className="text-ink">{sentTo || 'your email'}</strong>.
+              </span>
+            </div>
+          )}
+
+          {status === 'error' && (
+            <div className="mb-4 flex items-start gap-2.5 rounded-xl border border-pink/30 bg-pink/10 p-3.5 text-[0.9rem] text-pink">
+              <AlertCircle size={18} className="mt-0.5 flex-none" />
+              <span>
+                Something went wrong. Try again, or{' '}
+                <a
+                  href={mailtoFallback}
+                  className="inline-flex items-center gap-1.5 font-bold text-ink underline underline-offset-2"
+                >
+                  <MailOpen size={15} /> open your mail app
+                </a>{' '}
+                instead.
+              </span>
+            </div>
+          )}
+
+          <form onSubmit={onSubmit} className="grid gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <label className="grid gap-2">
-                <span className="text-[0.92rem] font-bold text-ink">Name</span>
+                <span className="text-[0.9rem] font-bold text-ink">Name</span>
                 <input
                   type="text"
                   name="name"
@@ -132,7 +178,7 @@ export default function Contact() {
                 />
               </label>
               <label className="grid gap-2">
-                <span className="text-[0.92rem] font-bold text-ink">Email</span>
+                <span className="text-[0.9rem] font-bold text-ink">Email</span>
                 <input
                   type="email"
                   name="email"
@@ -143,46 +189,47 @@ export default function Contact() {
                   className={inputCls}
                 />
               </label>
-              <label className="grid gap-2">
-                <span className="text-[0.92rem] font-bold text-ink">Subject</span>
-                <input
-                  type="text"
-                  name="subject"
-                  value={form.subject}
-                  onChange={update('subject')}
-                  placeholder="Project idea / role / hello"
-                  className={inputCls}
-                />
-              </label>
-              <label className="grid gap-2">
-                <span className="text-[0.92rem] font-bold text-ink">Message</span>
-                <textarea
-                  name="message"
-                  rows={7}
-                  required
-                  value={form.message}
-                  onChange={update('message')}
-                  placeholder="Tell me about the project or opportunity"
-                  className={`${inputCls} min-h-[160px] resize-y`}
-                />
-              </label>
-              <button
-                type="submit"
-                className="inline-flex w-full items-center justify-center gap-2 self-start rounded-[14px] bg-[linear-gradient(135deg,#22d3ee,#a78bfa)] px-[22px] py-[13px] font-display text-[1rem] font-bold text-[#05141c] shadow-[4px_4px_0_0_rgba(34,211,238,0.4)] transition-all duration-300 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0_0_rgba(34,211,238,0.5)] active:translate-x-0.5 active:translate-y-[3px] sm:w-auto"
-              >
-                {sent ? (
-                  <>
-                    <Check size={17} /> Opened in your mail app
-                  </>
-                ) : (
-                  <>
-                    Send Message <Send size={17} />
-                  </>
-                )}
-              </button>
-            </form>
-          </GlassCard>
-        </Reveal>
+            </div>
+            <label className="grid gap-2">
+              <span className="text-[0.9rem] font-bold text-ink">Subject</span>
+              <input
+                type="text"
+                name="subject"
+                value={form.subject}
+                onChange={update('subject')}
+                placeholder="Project idea / role / hello"
+                className={inputCls}
+              />
+            </label>
+            <label className="grid gap-2">
+              <span className="text-[0.9rem] font-bold text-ink">Message</span>
+              <textarea
+                name="message"
+                rows={7}
+                required
+                value={form.message}
+                onChange={update('message')}
+                placeholder="Tell me about the project or opportunity"
+                className={`${inputCls} min-h-[150px] resize-y`}
+              />
+            </label>
+            <button
+              type="submit"
+              disabled={status === 'sending'}
+              className="inline-flex w-full items-center justify-center gap-2 self-start rounded-xl bg-gradient-to-br from-cyan to-violet px-5 py-3 font-display text-[1rem] font-bold text-[#04141d] transition-opacity duration-200 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+            >
+              {status === 'sending' ? (
+                <>
+                  <Loader2 size={17} className="animate-spin" /> Sending…
+                </>
+              ) : (
+                <>
+                  Send Message <Send size={17} />
+                </>
+              )}
+            </button>
+          </form>
+        </GlassCard>
       </div>
     </main>
   );
