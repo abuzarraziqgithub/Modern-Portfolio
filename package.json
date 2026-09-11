@@ -3,11 +3,12 @@
   "private": true,
   "version": "2.0.0",
   "type": "module",
-  "description": "Abuzar RaziQ — Backend Engineer portfolio (React + Tailwind, bento minimalism)",
+  "description": "Abuzar RaziQ — Backend Engineer portfolio (React + Vite, minimal terminal aesthetic, Cloudflare Workers)",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "lucide-react": "^1.30.0",
@@ -19,6 +20,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.0.5",
     "tailwindcss": "^4.3.3",
-    "vite": "^8.2.1"
+    "vite": "^8.2.1",
+    "wrangler": "^4.131.0"
   }
 }
