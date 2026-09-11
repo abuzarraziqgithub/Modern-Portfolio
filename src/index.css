@@ -69,9 +69,33 @@
     border-radius: 2px;
   }
 
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+
+    .marquee-track {
+      animation: none !important;
+      flex-wrap: wrap;
     }
   }
 }
@@ -130,5 +154,9 @@
   .link-accent:hover {
     color: var(--color-accent);
     border-color: var(--color-accent);
+  }
+
+  .marquee-track {
+    animation: marquee 42s linear infinite;
   }
 }
