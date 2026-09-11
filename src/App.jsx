@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import ScrollManager from './components/ScrollManager';
 import ScrollProgress from './components/ScrollProgress';
 import Home from './pages/Home';
+import Projects from './pages/Projects';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/projects" element={<Projects />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <Footer />
