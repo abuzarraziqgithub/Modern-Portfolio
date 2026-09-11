@@ -108,6 +108,7 @@ export default function Nav() {
               key={link.id}
               type="button"
               onClick={() => go(link)}
+              aria-current={isActive(link) && link.to !== '/' ? 'page' : undefined}
               className={`px-3 py-1.5 font-mono text-sm transition-colors ${
                 isActive(link) ? 'text-accent' : 'text-muted hover:text-ink'
               }`}

@@ -1,0 +1,45 @@
+# Abuzar Raziq
+
+> Backend Engineer focused on Node.js, TypeScript, and clean, well-structured APIs.
+
+## About
+
+Abuzar Raziq is a backend engineer based in Islamabad, Pakistan. He builds and maintains
+REST APIs and backend services with Node.js, TypeScript, Express, MongoDB, and PostgreSQL.
+His work centers on authentication, JWT auth, hashing, validation, pagination, filtering,
+and realtime features with WebSockets. He runs Arch Linux, uses Neovim, and cares about
+security and data integrity in everything he ships.
+
+## Experience
+
+- Backend Developer — DUMMY: Some Startup Pvt Ltd — Jan 2025 to Present
+  (REST APIs, authentication systems, and backend services; Express, MongoDB, TypeScript, JWT, Docker)
+- Backend Developer Intern — DUMMY: Some Agency — Jun 2024 to Dec 2024
+  (API design, validation, and database schema design; Express, MongoDB, Postman)
+
+## Skills
+
+- Languages: TypeScript, JavaScript (ES6+), C++, Python
+- Backend: Node.js, Express, Mongoose, REST APIs, JWT auth, hashing, pagination, filtering, validation, WebSockets
+- Database: PostgreSQL, MongoDB
+- Testing: Jest
+- Tools: Neovim, Tmux, kitty, Postman, Obsidian
+- Deployment: Vercel, Heroku, Cloudflare Workers
+- OS: Arch Linux
+
+## Projects
+
+- Auth Service — reusable JWT-based authentication microservice with role-based access control.
+- Shopping Cart API — backend for a shopping app: products, cart, and checkout flows.
+- Realtime Chat Backend — WebSocket chat backend with rooms, presence, and message persistence.
+
+## Links
+
+- Home: https://abuzar.iabuzarraziq.workers.dev/
+- Projects: https://abuzar.iabuzarraziq.workers.dev/projects
+- Resume: https://abuzar.iabuzarraziq.workers.dev/resume.pdf
+- GitHub: https://github.com/abuzarraziqgithub
+- LinkedIn: https://pk.linkedin.com/in/abuzar-raziq
+- Email: iabuzarraziq@gmail.com
+
+This is a placeholder profile for AI crawlers and is updated alongside the portfolio.

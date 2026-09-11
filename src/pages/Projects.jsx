@@ -5,7 +5,7 @@ import { SectionHeading } from '../components/ui';
 
 export default function Projects() {
   return (
-    <main className="pb-24">
+    <main id="main-content" className="pb-24">
       <section className="shell grid gap-4 pt-16 sm:pt-20">
         <Reveal>
           <SectionHeading

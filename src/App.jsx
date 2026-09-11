@@ -10,6 +10,12 @@ import Projects from './pages/Projects';
 export default function App() {
   return (
     <div className="relative min-h-dvh">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-md focus:border focus:border-accent focus:bg-bg-elev focus:px-3 focus:py-2 focus:font-mono focus:text-sm focus:text-accent"
+      >
+        Skip to content
+      </a>
       <ScrollProgress />
       <ScrollManager />
       <Nav />

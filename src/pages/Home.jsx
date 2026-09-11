@@ -7,7 +7,7 @@ import ProjectsPreview from '../components/ProjectsPreview';
 
 export default function Home() {
   return (
-    <main className="pb-24">
+    <main id="main-content" className="pb-24">
       <Hero />
       <Marquee />
       <About />

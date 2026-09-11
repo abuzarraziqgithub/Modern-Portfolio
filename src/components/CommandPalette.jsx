@@ -254,6 +254,22 @@ export default function CommandPalette() {
       onPointerDown={(e) => {
         if (e.target === e.currentTarget) close();
       }}
+      onKeyDown={(e) => {
+        if (e.key !== 'Tab') return;
+        const focusables = Array.from(
+          e.currentTarget.querySelectorAll('input, button')
+        ).filter((el) => !el.disabled);
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }}
     >
       <div className="w-full max-w-xl overflow-hidden rounded-lg border border-line bg-bg-elev shadow-2xl shadow-black/60">
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
@@ -265,6 +281,7 @@ export default function CommandPalette() {
             aria-label="Search"
             aria-expanded="true"
             aria-controls="palette-list"
+            aria-activedescendant={filtered[active] ? `palette-opt-${active}` : undefined}
             placeholder="type a command, section, or link…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -286,6 +303,7 @@ export default function CommandPalette() {
               <li key={`${item.group}-${item.label}`} role="option" aria-selected={isActive}>
                 <button
                   type="button"
+                  id={`palette-opt-${i}`}
                   onPointerMove={() => setActive(i)}
                   onClick={() => choose(item)}
                   className={`flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors ${
