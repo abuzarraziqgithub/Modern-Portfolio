@@ -1,26 +1,20 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-bg0: #070812;
-  --color-bg1: #0b0d1b;
-  --color-bg2: #101228;
-  --color-ink: #eef2ff;
-  --color-muted: #9aa3c7;
-  --color-faint: #6b7396;
-  --color-cyan: #22d3ee;
-  --color-pink: #f472b6;
-  --color-violet: #a78bfa;
-  --color-lime: #a3e635;
-  --color-yellow: #fde047;
-  --color-orange: #fb923c;
-  --color-blue: #60a5fa;
+  /* --- Palette: dark, minimal, one accent --- */
+  --color-bg: #0a0a0b;
+  --color-bg-elev: #101013;
+  --color-bg-hi: #17171b;
+  --color-ink: #ededee;
+  --color-muted: #96969e;
+  --color-faint: #5d5d66;
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-accent: #4ade80;
+  --color-accent-ink: #04140a;
 
-  --font-display: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-
-  --radius-card: 22px;
-  --radius-sm: 14px;
+  /* --- Type: mono accents, plain readable body --- */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Fira Code', monospace;
 }
 
 @layer base {
@@ -32,16 +26,14 @@
   body {
     min-height: 100dvh;
     color: var(--color-ink);
-    font-family: var(--font-body);
+    font-family: var(--font-sans);
     line-height: 1.65;
-    background:
-      radial-gradient(1000px 700px at 85% -10%, rgba(167, 139, 250, 0.13), transparent 55%),
-      radial-gradient(900px 650px at -10% 15%, rgba(34, 211, 238, 0.11), transparent 55%),
-      linear-gradient(180deg, var(--color-bg0) 0%, var(--color-bg1) 45%, var(--color-bg2) 100%);
+    background: var(--color-bg);
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* Subtle terminal grid, faded toward the bottom */
   body::before {
     content: '';
     position: fixed;
@@ -49,12 +41,11 @@
     pointer-events: none;
     z-index: 0;
     background-image:
-      radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 26px 26px, 26px 26px;
-    background-position: 0 0, 13px 13px;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 80%);
-    opacity: 0.5;
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 55%, transparent 100%);
+    opacity: 0.35;
   }
 
   a {
@@ -67,19 +58,15 @@
     max-width: 100%;
   }
 
-  section[id] {
-    scroll-margin-top: 84px;
-  }
-
   ::selection {
-    background: var(--color-cyan);
-    color: #04121c;
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-cyan);
-    outline-offset: 3px;
-    border-radius: 4px;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -90,43 +77,58 @@
 }
 
 @layer components {
-  .section-shell {
-    width: min(1160px, calc(100% - 28px));
+  .shell {
+    width: min(1080px, calc(100% - 40px));
     margin-inline: auto;
   }
 
-  .bento {
-    border-radius: var(--radius-card);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  /* Terminal-ish card */
+  .panel {
+    border: 1px solid var(--color-line);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+    border-radius: 10px;
   }
 
-  .strip,
-  .about-section,
-  .skills-section,
-  .projects-section,
-  .contact-cta,
-  .footer-inner {
-    margin-top: 26px;
+  .panel-hover {
+    transition: border-color 0.2s ease, background-color 0.2s ease;
   }
-}
-
-@layer utilities {
-  .gradient-text {
-    background: linear-gradient(
-      110deg,
-      var(--color-cyan) 0%,
-      var(--color-violet) 40%,
-      var(--color-pink) 72%,
-      var(--color-yellow) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .panel-hover:hover {
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
-  .mask-fade-x {
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--color-line);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+  a.pill:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .link-accent {
+    color: var(--color-muted);
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .link-accent:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
   }
 }
