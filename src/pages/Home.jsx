@@ -1,6 +1,8 @@
 import Hero from '../components/Hero';
 import Marquee from '../components/Marquee';
 import About from '../components/About';
+import GithubGraph from '../components/GithubGraph';
+import ExperienceTimeline from '../components/ExperienceTimeline';
 
 export default function Home() {
   return (
@@ -8,6 +10,8 @@ export default function Home() {
       <Hero />
       <Marquee />
       <About />
+      <GithubGraph />
+      <ExperienceTimeline />
     </main>
   );
 }
