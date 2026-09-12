@@ -1,9 +1,9 @@
-import Backdrop from './Backdrop';
-import Reveal from './Reveal';
-import Fireflies from './Fireflies';
-import { IMAGES } from '../config/images';
-import { PROFILE } from '../data/profile';
-import { SOCIALS } from '../data/social';
+import Backdrop from "./Backdrop";
+import Reveal from "./Reveal";
+import Fireflies from "./Fireflies";
+import { IMAGES } from "../config/images";
+import { PROFILE } from "../data/profile";
+import { SOCIALS } from "../data/social";
 
 export default function Contact() {
   return (
@@ -15,11 +15,18 @@ export default function Contact() {
       overlayEnd="rgba(7,10,18,0.95)"
       className="py-28 sm:py-40 text-center"
     >
-      <Fireflies className="absolute inset-0 opacity-50" density={0.00005} palette={['#f0d0a0', '#cfc3ff', '#a9e6dd']} />
+      <Fireflies
+        className="absolute inset-0 opacity-50"
+        density={0.00005}
+        palette={["#f0d0a0", "#cfc3ff", "#a9e6dd"]}
+      />
 
       <div className="shell-tight relative z-10">
         <Reveal>
-          <p className="eyebrow justify-center" style={{ '--section-accent': 'var(--color-gold)' }}>
+          <p
+            className="eyebrow justify-center"
+            style={{ "--section-accent": "var(--color-gold)" }}
+          >
             Let&rsquo;s talk
           </p>
         </Reveal>
@@ -61,11 +68,17 @@ export default function Contact() {
                 >
                   <span
                     className="h-2.5 w-2.5 rounded-full transition-transform duration-300 group-hover:scale-125"
-                    style={{ background: s.accent, boxShadow: `0 0 12px 1px ${s.accent}` }}
+                    style={{
+                      background: s.accent,
+                      boxShadow: `0 0 12px 1px ${s.accent}`,
+                    }}
                   />
                   <span className="text-[0.95rem]">
                     {s.label}
-                    <span className="text-faint"> · {s.handle.replace('DUMMY: ', '')}</span>
+                    <span className="text-faint">
+                      {" "}
+                      · {s.handle.replace("DUMMY: ", "")}
+                    </span>
                   </span>
                 </a>
               </li>
