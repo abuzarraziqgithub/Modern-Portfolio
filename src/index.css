@@ -1,20 +1,29 @@
 @import 'tailwindcss';
 
 @theme {
-  /* --- Palette: dark, minimal, one accent --- */
-  --color-bg: #0a0a0b;
-  --color-bg-elev: #101013;
-  --color-bg-hi: #17171b;
-  --color-ink: #ededee;
-  --color-muted: #96969e;
-  --color-faint: #5d5d66;
-  --color-line: rgba(255, 255, 255, 0.09);
-  --color-accent: #4ade80;
-  --color-accent-ink: #04140a;
+  /* --- Base: deep navy / near-black night sky --- */
+  --color-night: #070a12;
+  --color-night-2: #0b0f1c;
+  --color-night-3: #111627;
+  --color-night-4: #1a2138;
+  --color-ink: #eceef4;
+  --color-muted: #9aa2b4;
+  --color-faint: #5c6377;
+  --color-line: rgba(255, 255, 255, 0.1);
 
-  /* --- Type: mono accents, plain readable body --- */
+  /* --- Accents: a "time of day" per section --- */
+  --color-gold: #e6b36b;
+  --color-gold-soft: #f0d0a0;
+  --color-rose: #f2a7b8;
+  --color-rose-soft: #f7cdd7;
+  --color-violet: #a78bfa;
+  --color-violet-soft: #cfc3ff;
+  --color-teal: #6fd3c4;
+  --color-teal-soft: #a9e6dd;
+
+  /* --- Type --- */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Fira Code', monospace;
 }
 
 @layer base {
@@ -27,25 +36,23 @@
     min-height: 100dvh;
     color: var(--color-ink);
     font-family: var(--font-sans);
-    line-height: 1.65;
-    background: var(--color-bg);
+    font-size: 17px;
+    line-height: 1.7;
+    background: var(--color-night);
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Subtle terminal grid, faded toward the bottom */
+  /* Soft painterly varnish over the whole page — quiet, not a grid */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-    background-size: 44px 44px;
-    mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 55%, transparent 100%);
-    opacity: 0.35;
+    background:
+      radial-gradient(1100px 700px at 75% -10%, rgba(167, 139, 250, 0.05), transparent 55%),
+      radial-gradient(900px 600px at 10% 110%, rgba(111, 211, 196, 0.04), transparent 55%);
   }
 
   a {
@@ -58,105 +65,132 @@
     max-width: 100%;
   }
 
+  section[id] {
+    scroll-margin-top: 4.5rem;
+  }
+
   ::selection {
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
+    background: var(--color-rose);
+    color: #1a0d12;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
-
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-  }
-
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
-    .marquee-track {
-      animation: none !important;
-      flex-wrap: wrap;
-    }
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 3px;
   }
 }
 
 @layer components {
   .shell {
-    width: min(1080px, calc(100% - 40px));
+    width: min(1120px, calc(100% - 44px));
     margin-inline: auto;
   }
 
-  /* Terminal-ish card */
-  .panel {
-    border: 1px solid var(--color-line);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
-    border-radius: 10px;
+  .shell-tight {
+    width: min(880px, calc(100% - 44px));
+    margin-inline: auto;
   }
 
-  .panel-hover {
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-  }
-  .panel-hover:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
+  /* An eyebrow label above a heading */
   .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-  }
-
-  .pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    border: 1px solid var(--color-line);
-    border-radius: 6px;
-    padding: 3px 8px;
-    font-family: var(--font-mono);
+    gap: 10px;
+    font-family: var(--font-sans);
     font-size: 0.72rem;
-    color: var(--color-muted);
-    white-space: nowrap;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--section-accent, var(--color-gold));
   }
-  a.pill:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-  }
-
-  .link-accent {
-    color: var(--color-muted);
-    border-bottom: 1px solid transparent;
-    transition: color 0.15s ease, border-color 0.15s ease;
-  }
-  .link-accent:hover {
-    color: var(--color-accent);
-    border-color: var(--color-accent);
+  .eyebrow::before {
+    content: '';
+    width: 26px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
   }
 
-  .marquee-track {
-    animation: marquee 42s linear infinite;
+  /* Fade + rise on scroll (toggled by .is-in via Reveal) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.85s cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 0.85s cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 {
+    transition-delay: 0.1s;
+  }
+  .reveal-delay-2 {
+    transition-delay: 0.2s;
+  }
+  .reveal-delay-3 {
+    transition-delay: 0.3s;
+  }
+
+  /* Ambient drifting fireflies/stars */
+  .fireflies {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Soft glowing text used for section headings */
+  .glow {
+    text-shadow: 0 0 26px rgba(255, 255, 255, 0.12);
+  }
+
+  /* Scroll cue chevron in the hero */
+  .cue {
+    animation: cue-bob 2.6s ease-in-out infinite;
+  }
+}
+
+@keyframes cue-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.45;
+  }
+}
+
+@keyframes node-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.12);
+  }
+  50% {
+    box-shadow: 0 0 18px 2px rgba(255, 255, 255, 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .cue {
+    animation: none;
+  }
+
+  .node-breathe {
+    animation: none;
   }
 }

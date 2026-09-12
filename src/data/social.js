@@ -1,22 +1,26 @@
-export const SOCIALS = {
-  github: {
+export const SOCIALS = [
+  {
     label: 'GitHub',
-    handle: '@abuzarraziqgithub',
-    url: 'https://github.com/abuzarraziqgithub',
+    handle: '@iabuzarraziq',
+    url: 'https://github.com/iabuzarraziq',
+    accent: '#e6b36b',
   },
-  linkedin: {
+  {
     label: 'LinkedIn',
     handle: 'DUMMY: @abuzarraziq',
-    url: 'https://pk.linkedin.com/in/abuzar-raziq',
+    url: 'DUMMY: https://linkedin.com/in/abuzarraziq',
+    accent: '#a78bfa',
   },
-  x: {
+  {
     label: 'X',
     handle: 'DUMMY: @iabuzarraziq',
     url: 'DUMMY: https://x.com/iabuzarraziq',
+    accent: '#6fd3c4',
   },
-  peerlist: {
-    label: 'Peerlist',
-    handle: 'DUMMY: @abuzarraziq',
-    url: 'DUMMY: https://peerlist.io/abuzarraziq',
+  {
+    label: 'Substack',
+    handle: 'DUMMY: @iabuzarraziq',
+    url: 'DUMMY: https://iabuzarraziq.substack.com',
+    accent: '#f2a7b8',
   },
-};
+];

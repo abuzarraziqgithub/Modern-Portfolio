@@ -1,25 +1,26 @@
 export const PROJECTS = [
   {
-    title: 'Auth Service',
+    title: 'DUMMY: Task Flow API',
     description:
-      'A reusable JWT-based authentication microservice with role-based access control.',
-    tags: ['Node.js', 'Express', 'MongoDB', 'JWT'],
-    live: 'DUMMY: https://example.com',
-    repo: 'https://github.com/abuzarraziqgithub/auth-service',
+      'A RESTful task-management backend with JWT auth, role-based permissions, and MongoDB persistence.',
+    tags: ['Node.js', 'TypeScript', 'MongoDB', 'Express'],
+    live: '',
+    repo: 'https://github.com/iabuzarraziq/task-flow-api',
   },
   {
-    title: 'Shopping Cart API',
-    description: 'Backend for a shopping app \u2014 products, cart, and fake checkout flow.',
-    tags: ['Node.js', 'Express', 'PostgreSQL'],
-    live: 'DUMMY: https://example.com',
-    repo: 'https://github.com/abuzarraziqgithub/shopping-api',
+    title: 'DUMMY: Ledger — Expense Tracker Backend',
+    description:
+      'PostgreSQL-backed expense tracking service with category analytics and monthly reports.',
+    tags: ['Node.js', 'PostgreSQL', 'TypeScript'],
+    live: '',
+    repo: 'https://github.com/iabuzarraziq/ledger-api',
   },
   {
-    title: 'Realtime Chat Backend',
+    title: 'DUMMY: Realtime Room',
     description:
-      'WebSocket-based chat backend with rooms, presence, and message persistence.',
-    tags: ['Node.js', 'WebSockets', 'Redis'],
-    live: 'DUMMY: https://example.com',
-    repo: 'https://github.com/abuzarraziqgithub/chat-backend',
+      'A small WebSocket-based chat app to learn real-time systems — rooms, presence, message history.',
+    tags: ['Node.js', 'WebSockets', 'React'],
+    live: '',
+    repo: 'https://github.com/iabuzarraziq/realtime-room',
   },
 ];

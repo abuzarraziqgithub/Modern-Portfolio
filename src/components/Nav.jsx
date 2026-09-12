@@ -1,105 +1,74 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { PROFILE } from '../data/profile';
 
-export const OPEN_PALETTE_EVENT = 'ar:open-command-palette';
-
 const LINKS = [
-  { id: 'home', label: 'home', to: '/' },
-  { id: 'projects', label: 'projects', to: '/projects' },
+  { id: 'about', label: 'About' },
+  { id: 'stack', label: 'Stack' },
+  { id: 'learning', label: 'Learning' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'beyond', label: 'Beyond' },
+  { id: 'contact', label: 'Contact' },
 ];
 
-export function isMacLike() {
-  if (typeof navigator === 'undefined') return false;
-  return /Mac|iPhone|iPad|iPod/i.test(navigator.platform || navigator.userAgent);
-}
-
-function useScrollSpy(active) {
-  const [section, setSection] = useState(active);
-
+function useScrollSpy() {
+  const [active, setActive] = useState('');
   useEffect(() => {
-    if (active !== 'home') {
-      setSection(active);
-      return undefined;
-    }
-    const ids = ['home', 'about', 'github', 'experience', 'projects'];
+    const ids = ['hero', ...LINKS.map((l) => l.id)];
     const els = ids.map((id) => document.getElementById(id)).filter(Boolean);
     if (!els.length || typeof IntersectionObserver === 'undefined') return undefined;
-
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) setSection(e.target.id);
+          if (e.isIntersecting) setActive(e.target.id);
         });
       },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0.1 }
+      { rootMargin: '-40% 0px -55% 0px', threshold: 0.1 }
     );
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
-  }, [active]);
-
-  return section;
+  }, []);
+  return active;
 }
 
 export default function Nav() {
+  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const isHome = location.pathname === '/';
-  const section = useScrollSpy(isHome ? 'home' : location.pathname === '/projects' ? 'projects' : 'home');
-
-  const close = useCallback(() => setOpen(false), []);
-
-  useEffect(() => {
-    close();
-  }, [location.pathname, close]);
+  const active = useScrollSpy();
 
   useEffect(() => {
     if (!open) return undefined;
-    document.body.style.overflow = 'hidden';
     const onKey = (e) => e.key === 'Escape' && setOpen(false);
     document.addEventListener('keydown', onKey);
-    return () => {
-      document.body.style.overflow = '';
-      document.removeEventListener('keydown', onKey);
-    };
+    return () => document.removeEventListener('keydown', onKey);
   }, [open]);
 
-  const isActive = (link) => (link.to === '/' ? section === 'home' || section === 'about' || section === 'github' || section === 'experience' : location.pathname === link.to);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-  const go = (link) => {
+  const go = (id) => {
     setOpen(false);
-    if (link.to === '/') {
-      if (location.pathname !== '/') {
-        navigate('/');
-        return;
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    navigate(link.to);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-
-  const openPalette = () => {
-    document.dispatchEvent(new CustomEvent(OPEN_PALETTE_EVENT));
-  };
-
-  const kbd = isMacLike() ? '\u2318K' : 'Ctrl K';
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur-md">
-      <nav className="shell flex h-14 items-center justify-between gap-3">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
+        scrolled || open ? 'border-b border-line bg-night/80 backdrop-blur-md' : 'border-b border-transparent bg-transparent'
+      }`}
+    >
+      <nav className="shell flex h-16 items-center justify-between gap-3" aria-label="Primary">
         <button
           type="button"
-          onClick={() => go(LINKS[0])}
-          className="group inline-flex items-baseline gap-1 font-mono text-sm font-bold tracking-tight"
-          aria-label="Abuzar Raziq — home"
+          onClick={() => go('hero')}
+          className="group inline-flex items-baseline gap-2 font-display text-lg font-medium tracking-wide text-ink"
+          aria-label="Abuzar Raziq — back to top"
         >
-          <span className="text-accent transition-colors">~</span>
-          <span className="text-ink">/ar</span>
-          <span className="hidden text-muted transition-colors group-hover:text-accent sm:inline">
-            /portfolio
-          </span>
+          <span className="text-gold transition-colors group-hover:text-gold-soft">✦</span>
+          <span>{PROFILE.name}</span>
         </button>
 
         <div className="ml-auto hidden items-center gap-1 md:flex">
@@ -107,33 +76,21 @@ export default function Nav() {
             <button
               key={link.id}
               type="button"
-              onClick={() => go(link)}
-              aria-current={isActive(link) && link.to !== '/' ? 'page' : undefined}
-              className={`px-3 py-1.5 font-mono text-sm transition-colors ${
-                isActive(link) ? 'text-accent' : 'text-muted hover:text-ink'
+              onClick={() => go(link.id)}
+              aria-current={active === link.id ? 'true' : undefined}
+              className={`px-3 py-1.5 text-sm transition-colors ${
+                active === link.id ? 'text-gold' : 'text-muted hover:text-ink'
               }`}
             >
-              [ <span className={isActive(link) ? 'text-accent' : ''}>{link.label}</span> ]
+              {link.label}
             </button>
           ))}
           <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-3 py-1.5 font-mono text-sm text-muted transition-colors hover:text-ink"
+            href={`mailto:${PROFILE.email}`}
+            className="ml-2 rounded-full border border-gold/40 px-4 py-1.5 text-sm text-gold transition-colors hover:border-gold hover:bg-gold/10"
           >
-            [ resume.pdf ]
+            Say hi
           </a>
-
-          <button
-            type="button"
-            onClick={openPalette}
-            className="ml-2 inline-flex h-7 items-center gap-1.5 rounded-md border border-line bg-bg-hi px-2 font-mono text-[0.72rem] text-muted transition-colors hover:border-accent hover:text-accent"
-            aria-label="Open command palette"
-            aria-haspopup="dialog"
-          >
-            <span>{kbd}</span>
-          </button>
         </div>
 
         <button
@@ -142,16 +99,13 @@ export default function Nav() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
-          className="ml-auto inline-flex h-8 w-8 flex-col items-center justify-center gap-[5px] rounded-md border border-line bg-bg-hi md:hidden"
+          className="ml-auto inline-flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-full border border-line bg-night-2/60 md:hidden"
         >
           <span
             className="block h-[2px] w-4 rounded-full bg-ink transition-transform"
             style={{ transform: open ? 'translateY(6px) rotate(45deg)' : 'none' }}
           />
-          <span
-            className="block h-[2px] w-4 rounded-full bg-ink transition-opacity"
-            style={{ opacity: open ? 0 : 1 }}
-          />
+          <span className="block h-[2px] w-4 rounded-full bg-ink transition-opacity" style={{ opacity: open ? 0 : 1 }} />
           <span
             className="block h-[2px] w-4 rounded-full bg-ink transition-transform"
             style={{ transform: open ? 'translateY(-6px) rotate(-45deg)' : 'none' }}
@@ -161,38 +115,20 @@ export default function Nav() {
         {open && (
           <div
             id="mobile-nav"
-            className="absolute left-0 right-0 top-14 flex flex-col gap-1 border-b border-line bg-bg px-3 py-3 md:hidden"
+            className="absolute left-0 right-0 top-16 flex flex-col gap-1 border-b border-line bg-night/95 px-4 py-4 backdrop-blur-md md:hidden"
           >
             {LINKS.map((link) => (
               <button
                 key={link.id}
                 type="button"
-                onClick={() => go(link)}
-                className={`rounded-md px-3 py-2.5 text-left font-mono text-sm transition-colors ${
-                  isActive(link) ? 'bg-bg-hi text-accent' : 'text-muted hover:text-ink'
+                onClick={() => go(link.id)}
+                className={`rounded-md px-3 py-2.5 text-left text-base transition-colors ${
+                  active === link.id ? 'text-gold' : 'text-muted hover:text-ink'
                 }`}
               >
                 {link.label}
               </button>
             ))}
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md px-3 py-2.5 font-mono text-sm text-muted transition-colors hover:text-ink"
-            >
-              resume.pdf
-            </a>
-            <button
-              type="button"
-              onClick={() => {
-                setOpen(false);
-                openPalette();
-              }}
-              className="rounded-md px-3 py-2.5 text-left font-mono text-sm text-muted transition-colors hover:text-ink"
-            >
-              command palette ({kbd})
-            </button>
           </div>
         )}
       </nav>

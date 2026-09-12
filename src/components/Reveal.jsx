@@ -1,43 +1,45 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+
+function prefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
 
 export default function Reveal({ children, className = '', delay = 0 }) {
   const ref = useRef(null);
-  const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return undefined;
-    if (
-      typeof IntersectionObserver === 'undefined' ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      setShown(true);
+    if (prefersReducedMotion()) {
+      el.classList.add('is-in');
+      return undefined;
+    }
+    if (typeof IntersectionObserver === 'undefined') {
+      el.classList.add('is-in');
       return undefined;
     }
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setShown(true);
+          el.classList.add('is-in');
           obs.disconnect();
         }
       },
-      { threshold: 0.05, rootMargin: '0px 0px -30px 0px' }
+      { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
 
+  const delayClass =
+    delay === 1 ? 'reveal-delay-1' : delay === 2 ? 'reveal-delay-2' : delay === 3 ? 'reveal-delay-3' : '';
+
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: shown ? 1 : 0,
-        transform: shown ? 'none' : 'translateY(16px)',
-        transition: `opacity 0.55s ease ${delay}ms, transform 0.55s ease ${delay}ms`,
-        willChange: 'opacity, transform',
-      }}
-    >
+    <div ref={ref} className={`reveal ${delayClass} ${className}`.trim()}>
       {children}
     </div>
   );

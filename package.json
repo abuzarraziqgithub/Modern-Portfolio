@@ -3,7 +3,7 @@
   "private": true,
   "version": "2.0.0",
   "type": "module",
-  "description": "Abuzar RaziQ — Backend Engineer portfolio (React + Vite, minimal terminal aesthetic, Cloudflare Workers)",
+  "description": "Abuzar Raziq — Backend Engineer portfolio (React + Vite, dreamlike/storybook aesthetic, Cloudflare Workers)",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -1,33 +1,40 @@
-import { ArrowUpRight } from 'lucide-react';
-import { ABOUT_LINES } from '../data/profile';
 import Reveal from './Reveal';
-import { SectionHeading } from './ui';
+import SectionHeading from './SectionHeading';
+import { IMAGES } from '../config/images';
+import { ABOUT_PARAGRAPHS } from '../data/profile';
 
 export default function About() {
   return (
-    <section id="about" className="shell py-20 sm:py-24">
-      <Reveal>
-        <SectionHeading slug="about" title="about me" />
-      </Reveal>
+    <section id="about" className="relative bg-night py-24 sm:py-32 overflow-hidden">
+      {/* Subtle side accent image */}
+      <div
+        className="pointer-events-none absolute right-0 top-0 hidden h-[600px] w-[440px] opacity-[0.12] sm:block"
+        aria-hidden="true"
+      >
+        <img
+          src={IMAGES.about.src}
+          alt=""
+          loading="lazy"
+          className="h-full w-full object-cover object-center"
+          style={{ maskImage: 'linear-gradient(to left, black 20%, transparent 80%)' }}
+        />
+      </div>
 
-      <Reveal delay={40}>
-        <div className="grid gap-5 border-l-2 border-accent/70 pl-6 sm:pl-8">
-          {ABOUT_LINES.map((line, i) => (
-            <p key={i} className="max-w-[60ch] text-[1.05rem] leading-relaxed text-muted sm:text-[1.2rem]">
-              {line.lead}
-              <strong className="font-semibold text-ink">{line.highlight}</strong>
-              {line.rest}
-            </p>
+      <div className="shell-tight relative z-10">
+        <SectionHeading
+          eyebrow="Who I am"
+          title="A backend engineer who likes things done properly."
+          accent="var(--color-rose)"
+        />
+
+        <div className="space-y-6 text-[1.05rem] leading-[1.85] text-muted">
+          {ABOUT_PARAGRAPHS.map((para, i) => (
+            <Reveal key={i} delay={i < 3 ? i : 3}>
+              <p>{para}</p>
+            </Reveal>
           ))}
-          <p className="pt-2 font-mono text-xs text-faint">
-            LLMs: please read{' '}
-            <a href="/llms.txt" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-accent transition-opacity hover:opacity-80">
-              /llms.txt <ArrowUpRight size={11} />
-            </a>{' '}
-            instead.
-          </p>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }
