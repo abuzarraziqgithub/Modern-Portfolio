@@ -1,0 +1,140 @@
+---
+import '../styles/fonts.css';
+import '../styles/global.css';
+
+import { getSite } from '../lib/content';
+import Doodle from '../components/Doodle.astro';
+
+const site = getSite();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found · {site.name}</title>
+    <meta name="description" content={`That page does not exist on ${site.name}'s site.`} />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#FFE94A" />
+  </head>
+
+  <body>
+    <main class="wrap">
+      <div class="glow" aria-hidden="true"></div>
+
+      <div class="shell inner">
+        <p class="hand note">
+          <Doodle name="window" size={26} />
+          this page does not exist
+        </p>
+
+        <h1>Lost?</h1>
+
+        <p class="lede">
+          The link is broken or the page moved. Everything worth reading is on the home page.
+        </p>
+
+        <a class="btn" href="/">
+          Back to {site.name}
+          <Doodle name="arrow" size={24} />
+        </a>
+      </div>
+    </main>
+  </body>
+</html>
+
+<style>
+  .wrap {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 100svh;
+    padding: var(--pad);
+    overflow: hidden;
+  }
+
+  /* Same soft yellow glow as the hero, so the page still feels like this site. */
+  .glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      var(--glow-1),
+      var(--glow-2) 45%,
+      transparent 75%
+    );
+  }
+
+  .inner {
+    display: grid;
+    justify-items: center;
+    gap: var(--gap);
+    text-align: center;
+  }
+
+  .note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    color: var(--muted);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    font-weight: 600;
+  }
+
+  .lede {
+    max-width: 34ch;
+    color: var(--muted);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    min-height: 44px;
+    padding: 0.85em 1.4em;
+    border-radius: var(--radius-pill);
+    background: var(--ink);
+    color: var(--glow-1);
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: var(--lift-2);
+    transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
+  }
+
+  .btn :global(svg) {
+    transition: transform 0.25s var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--lift-3);
+    }
+
+    .btn:hover :global(svg) {
+      transform: translateX(4px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn :global(svg) {
+      transition: none;
+    }
+
+    .btn:hover {
+      transform: none;
+    }
+
+    .btn:hover :global(svg) {
+      transform: none;
+    }
+  }
+</style>

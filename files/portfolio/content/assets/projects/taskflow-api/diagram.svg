@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" role="img" aria-label="Request flow diagram for the Task Flow API: public sign-up and login, a JWT auth middleware guarding the user and task routes, and the Mongoose models backing them in MongoDB.">
+  <title>Task Flow API request flow</title>
+  <desc>Drawn from the routes in src/routers/user.js and src/routers/task.js, the auth middleware in src/middleware/auth.js, and the schemas in src/models/user.js and src/models/task.js.</desc>
+
+  <style>
+    .box { fill: #FFFFFF; stroke: #0E0E0C; stroke-width: 2; }
+    .soft { fill: #F4F4F2; stroke: #0E0E0C; stroke-width: 2; }
+    .accent { fill: #FFE94A; stroke: #0E0E0C; stroke-width: 2; }
+    .lbl { font: 600 13px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #0E0E0C; }
+    .mono { font: 400 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #0E0E0C; }
+    .note { font: 400 11px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #6C6C66; }
+    .lbl-sm { font: 600 11px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #0E0E0C; }
+    .ln { stroke: #0E0E0C; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .ln-dash { stroke: #6C6C66; stroke-width: 2; fill: none; stroke-dasharray: 5 5; stroke-linecap: round; }
+  </style>
+
+  <rect width="760" height="500" fill="#FFFFFF" />
+
+  <!-- ============ public routes ============ -->
+  <text class="lbl" x="24" y="34">public</text>
+  <rect class="accent" x="24" y="44" width="176" height="62" rx="14" />
+  <text class="mono" x="40" y="70">POST /users</text>
+  <text class="note" x="40" y="90">signup, returns token</text>
+
+  <rect class="accent" x="24" y="122" width="176" height="62" rx="14" />
+  <text class="mono" x="40" y="148">POST /users/login</text>
+  <text class="note" x="40" y="168">bcrypt.compare</text>
+
+  <path class="ln-dash" d="M112 106 L112 122" />
+  <path class="ln-dash" d="M112 184 L112 214" />
+
+  <!-- ============ auth middleware ============ -->
+  <text class="lbl" x="240" y="34">everything else</text>
+  <rect class="soft" x="240" y="44" width="230" height="170" rx="18" />
+  <text class="lbl" x="258" y="70">middleware/auth.js</text>
+
+  <rect class="box" x="258" y="84" width="194" height="30" rx="9" />
+  <text class="mono" x="270" y="104">jwt.verify(token)</text>
+
+  <rect class="box" x="258" y="120" width="194" height="48" rx="9" />
+  <text class="mono" x="270" y="140">User.findOne({</text>
+  <text class="mono" x="270" y="158">  tokens.token: token</text>
+
+  <text class="note" x="258" y="192">the token must still be stored</text>
+  <text class="note" x="258" y="206">so logout really kills it</text>
+
+  <path class="ln-dash" d="M200 245 L240 245" />
+  <text class="lbl-sm" x="204" y="236">Bearer</text>
+
+  <!-- ============ routes ============ -->
+  <rect class="box" x="510" y="44" width="226" height="80" rx="16" />
+  <text class="lbl" x="528" y="68">/users/me</text>
+  <text class="mono" x="528" y="90">GET · PATCH · DELETE</text>
+  <text class="note" x="528" y="110">name, age, email, password</text>
+
+  <rect class="box" x="510" y="134" width="226" height="80" rx="16" />
+  <text class="lbl" x="528" y="158">/users/me/avatar</text>
+  <text class="mono" x="528" y="180">POST · GET · DELETE</text>
+  <text class="note" x="528" y="200">sent back as image/png</text>
+
+  <rect class="box" x="510" y="228" width="226" height="80" rx="16" />
+  <text class="lbl" x="528" y="252">/tasks</text>
+  <text class="mono" x="528" y="274">GET · POST</text>
+  <text class="note" x="528" y="294">filter, sort, limit, skip</text>
+
+  <rect class="box" x="510" y="318" width="226" height="62" rx="16" />
+  <text class="lbl" x="528" y="342">/tasks/:id</text>
+  <text class="mono" x="528" y="364">GET · PATCH · DELETE</text>
+
+  <path class="ln" d="M470 129 L492 129 L492 84 L510 84" />
+  <path class="ln" d="M470 129 L492 129 L492 174 L510 174" />
+  <path class="ln" d="M470 200 L492 200 L492 268 L510 268" />
+  <path class="ln" d="M470 245 L492 245 L492 349 L510 349" />
+  <circle cx="470" cy="129" r="4" fill="#0E0E0C" />
+  <circle cx="470" cy="200" r="4" fill="#0E0E0C" />
+  <circle cx="470" cy="245" r="4" fill="#0E0E0C" />
+
+  <!-- ============ avatar pipeline ============ -->
+  <path class="ln" d="M200 424 L200 452 L736 452" />
+  <path class="ln" d="M623 452 L623 386" />
+  <path d="M615 396 L623 386 L631 396" class="ln" />
+
+  <rect class="box" x="24" y="404" width="152" height="40" rx="12" />
+  <text class="mono" x="38" y="429">multer, memory</text>
+
+  <rect class="box" x="192" y="404" width="152" height="40" rx="12" />
+  <text class="mono" x="206" y="429">sharp 250x250</text>
+
+  <rect class="box" x="360" y="404" width="152" height="40" rx="12" />
+  <text class="mono" x="374" y="429">Buffer in User</text>
+
+  <path class="ln" d="M176 424 L192 424" />
+  <path class="ln" d="M344 424 L360 424" />
+  <path d="M186 418 L194 424 L186 430" class="ln" />
+  <path d="M354 418 L362 424 L354 430" class="ln" />
+  <text class="note" x="24" y="470">1 MB cap, png / jpeg / jpg only</text>
+
+  <!-- ============ models ============ -->
+  <rect class="soft" x="524" y="404" width="212" height="40" rx="12" />
+  <text class="mono" x="538" y="429">MONGODB_URL, mongoose</text>
+
+  <path class="ln-dash" d="M512 424 L524 424" />
+
+  <!-- cascade note -->
+  <path class="ln-dash" d="M623 380 L623 372" />
+  <text class="note" x="398" y="380">deleting a user deleteMany's their tasks</text>
+</svg>

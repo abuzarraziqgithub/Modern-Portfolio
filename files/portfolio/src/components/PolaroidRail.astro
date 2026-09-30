@@ -1,0 +1,93 @@
+---
+import { asset } from '../lib/assets';
+import type { Polaroid } from '../lib/content';
+import ResponsiveImage from './ResponsiveImage.astro';
+
+interface Props {
+  polaroids: Polaroid[];
+}
+
+const { polaroids } = Astro.props;
+// Slight rotation per figure, alternating sign so the rail does not look stamped.
+const tilts = [3, -2.5, 2, -3, 1.5, -1.5];
+---
+
+<ul class="rail">
+  {
+    polaroids.map((p, i) => (
+      <li style={`--r:${tilts[i % tilts.length]}deg`}>
+        <figure>
+          <ResponsiveImage
+            src={asset(p.image)}
+            widths={[320, 480, 768]}
+            sizes="(min-width: 700px) 320px, 70vw"
+            alt={p.alt}
+          />
+          <figcaption class="hand">{p.caption}</figcaption>
+        </figure>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .rail {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 0.5rem var(--pad) 1.5rem;
+    margin-inline: calc(var(--pad) * -1);
+    list-style: none;
+  }
+
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  li {
+    flex: 0 0 min(70%, 320px);
+    scroll-snap-align: center;
+  }
+
+  /* The frame is CSS, never baked into the file. */
+  figure {
+    margin: 0;
+    padding: 12px 12px 44px;
+    background: #fff;
+    border-radius: 6px;
+    rotate: var(--r, -2deg);
+    box-shadow: var(--lift-2);
+    transition: rotate 0.35s var(--spring);
+  }
+
+  figure :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 30%;
+    border-radius: 3px;
+    background: var(--card);
+  }
+
+  figcaption {
+    margin-block-start: 0.55rem;
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--ink);
+  }
+
+  @media (hover: hover) {
+    figure:hover {
+      rotate: 0deg;
+      scale: 1.02;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    figure {
+      rotate: 0deg;
+    }
+  }
+</style>

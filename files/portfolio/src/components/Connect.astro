@@ -1,0 +1,286 @@
+---
+import type { Site } from '../lib/content';
+import Doodle from './Doodle.astro';
+
+interface Props {
+  connect: Site['connect'];
+  name: string;
+}
+
+const { connect, name } = Astro.props;
+
+const icons: Record<string, string> = {
+  github:
+    'M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2Z',
+  linkedin:
+    'M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.45-2.2 2.96V21h-4V9Z',
+  x: 'M17.53 3h3.02l-6.6 7.54L21.75 21h-6.06l-4.75-6.2L5.5 21H2.47l7.06-8.07L2.25 3h6.22l4.29 5.67L17.53 3Zm-1.06 16.2h1.67L7.6 4.7H5.8l10.67 14.5Z',
+  instagram:
+    'M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9a3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2Zm0 3.4a6.4 6.4 0 1 0 0 12.8 6.4 6.4 0 0 0 0-12.8Zm0 10.55a4.15 4.15 0 1 1 0-8.3 4.15 4.15 0 0 1 0 8.3Zm6.65-10.9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z',
+  youtube:
+    'M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15.1V8.9l5.2 3.1-5.2 3.1Z',
+  tiktok: 'M16.5 3h-2.7v11.4a2.2 2.2 0 1 1-1.9-2.16V9.4a5 5 0 1 0 4.6 4.98V8.9a6 6 0 0 0 3.4 1.05V7.3a3.4 3.4 0 0 1-3.4-3.4V3Z',
+  facebook:
+    'M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.5-3.89 3.77-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12Z',
+};
+
+const labels: Record<string, string> = {
+  github: 'GitHub',
+  linkedin: 'LinkedIn',
+  x: 'X',
+  instagram: 'Instagram',
+  youtube: 'YouTube',
+  tiktok: 'TikTok',
+  facebook: 'Facebook',
+};
+---
+
+<section id="chat" class="section defer connect">
+  <div class="shell">
+    {connect.note && <p class="hand note">{connect.note}</p>}
+
+    <button class="btn" popovertarget="dock">
+      Connect
+      <Doodle name="heartArrow" size={28} class="heart" />
+    </button>
+
+    <p class="status">
+      {name} is open to internships and junior roles.
+      {
+        connect.resume && (
+          <a href={`/${connect.resume}`} download>
+            Download the CV
+          </a>
+        )
+      }
+    </p>
+  </div>
+</section>
+
+<div id="dock" popover class="dock" aria-label="Contact links">
+  <ul>
+    <li>
+      <a href={`mailto:${connect.email}`} aria-label={`Email ${name} at ${connect.email}`}>
+        <span class="glyph" aria-hidden="true">@</span>
+        <span class="tip">{connect.email}</span>
+      </a>
+    </li>
+    {
+      connect.socials.map((s) => (
+        <li>
+          <a href={s.url} rel="noopener me" aria-label={labels[s.name] ?? s.name}>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+              <path d={icons[s.name]} />
+            </svg>
+            <span class="tip">{labels[s.name] ?? s.name}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <form method="dialog" class="close">
+    <button aria-label="Close">Close</button>
+  </form>
+</div>
+
+<style>
+  .connect {
+    text-align: center;
+  }
+
+  .note {
+    font-size: clamp(1.4rem, 1.1rem + 1.4vw, 2.2rem);
+    margin-block-end: 1.5rem;
+  }
+
+  /* Glossy 3D pill */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    border: 0;
+    border-radius: var(--radius-pill);
+    padding: 0.35em 1.1em 0.42em;
+    font-family: var(--font);
+    font-size: clamp(3rem, 12vw, 9rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: #fff;
+    background: linear-gradient(#3a3a38, #1c1c1a);
+    rotate: -3deg;
+    cursor: pointer;
+    box-shadow:
+      0 0.06em 0 #000,
+      0 0.12em 0 #555,
+      0 0.3em 0.5em rgb(0 0 0 / 0.3);
+    transition:
+      translate 0.15s,
+      box-shadow 0.15s,
+      filter 0.3s;
+  }
+
+  :global(.heart) {
+    translate: 0 -0.1em;
+    transition: rotate 0.3s var(--spring);
+  }
+
+  .btn:active {
+    translate: 0 0.05em;
+    box-shadow:
+      0 0.02em 0 #000,
+      0 0.06em 0 #555,
+      0 0.12em 0.3em rgb(0 0 0 / 0.3);
+  }
+
+  .btn:hover,
+  .btn:focus-visible,
+  .btn:active {
+    filter: drop-shadow(0 0 0.35em var(--glow-1));
+    color: var(--glow-1);
+  }
+
+  @media (hover: hover) {
+    .btn:hover :global(.heart) {
+      rotate: -8deg;
+    }
+  }
+
+  .status {
+    margin-block-start: 2.5rem;
+    color: var(--muted);
+  }
+
+  .status a {
+    margin-inline-start: 0.6rem;
+  }
+
+  /* Dock: popover, no JS. Esc closes it natively. */
+  .dock {
+    position: fixed;
+    inset: auto 1rem 1rem;
+    margin-inline: auto;
+    max-width: 44rem;
+    padding: 1.1rem;
+    border: 0;
+    border-radius: var(--radius-card);
+    background: var(--page);
+    box-shadow: var(--lift-3);
+    translate: 0 120%;
+    opacity: 0;
+    transition:
+      translate 0.5s var(--ease-out),
+      opacity 0.3s,
+      display 0.5s allow-discrete,
+      overlay 0.5s allow-discrete;
+  }
+
+  .dock:popover-open {
+    translate: 0 0;
+    opacity: 1;
+  }
+
+  @starting-style {
+    .dock:popover-open {
+      translate: 0 120%;
+      opacity: 0;
+    }
+  }
+
+  /* Without popover support the dock is a plain block, so the links stay reachable. */
+  @supports not selector(:popover-open) {
+    .dock {
+      position: static;
+      translate: none;
+      opacity: 1;
+      margin: var(--pad) auto;
+      max-width: var(--shell);
+    }
+  }
+
+  .dock::backdrop {
+    background: rgb(14 14 12 / 0.32);
+    backdrop-filter: blur(2px);
+  }
+
+  .dock ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .dock a {
+    display: grid;
+    place-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
+    border-radius: var(--radius-pill);
+    background: var(--card);
+    text-decoration: none;
+    transition: scale 0.25s var(--spring);
+  }
+
+  .glyph {
+    font-weight: 600;
+    font-size: 1.15rem;
+  }
+
+  .tip {
+    position: absolute;
+    translate: 0 140%;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-pill);
+    background: var(--ink);
+    color: var(--glow-1);
+    font-size: var(--step--1);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .dock a {
+    position: relative;
+  }
+
+  .dock a:hover .tip,
+  .dock a:focus-visible .tip {
+    opacity: 1;
+  }
+
+  /* Magnify the icon under the pointer and its neighbours. */
+  @media (hover: hover) {
+    .dock li {
+      transition: scale 0.25s var(--spring);
+    }
+
+    .dock li:hover {
+      scale: 1.4;
+      z-index: 1;
+    }
+
+    .dock li:hover + li,
+    .dock li:has(+ li:hover) {
+      scale: 1.18;
+    }
+  }
+
+  .close {
+    display: grid;
+    justify-items: center;
+    margin-block-start: 0.9rem;
+  }
+
+  .close button {
+    border: 0;
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 1.1rem;
+    min-height: 44px;
+    background: var(--card);
+    color: var(--muted);
+    cursor: pointer;
+  }
+</style>

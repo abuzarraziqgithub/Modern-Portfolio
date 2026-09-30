@@ -1,0 +1,35 @@
+---
+// Original doodles, drawn as inline SVG. Keep each under 600 bytes.
+export type DoodleName = 'arrow' | 'sparkle' | 'underline' | 'burst' | 'heartArrow' | 'window';
+
+const paths: Record<DoodleName, string> = {
+  arrow: 'M2 9c4-1 7-3 9-6m0 0-1 4m1-4-4 1',
+  sparkle: 'M8 1.5 9.2 6 13.5 7.2 9.2 8.4 8 13 6.8 8.4 2.5 7.2 6.8 6z',
+  underline: 'M1 8c3-2.4 5 1.6 8-.6 2.4-1.8 3.6.8 6-.4',
+  burst: 'M8 1v3.2M8 11.8V15M1 8h3.2M11.8 8H15M3.2 3.2l2.2 2.2M10.6 10.6l2.2 2.2M12.8 3.2l-2.2 2.2M5.4 10.6l-2.2 2.2',
+  heartArrow: 'M8 13S2 9.4 2 5.6A3 3 0 0 1 8 4a3 3 0 0 1 6 1.6C14 9.4 8 13 8 13z',
+  window: 'M1.5 4.5h13v9h-13zM1.5 7.5h13M4 6h.01M6 6h.01',
+};
+
+const { name, size = 16, class: className } = Astro.props as {
+  name: DoodleName;
+  size?: number;
+  class?: string;
+};
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 16 16"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  <path d={paths[name]}></path>
+</svg>

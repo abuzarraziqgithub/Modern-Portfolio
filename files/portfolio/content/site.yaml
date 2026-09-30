@@ -1,0 +1,41 @@
+# Fill every field. Lines marked REQUIRED must be real or the build fails.
+# Write in your own voice. Rough is fine, the agent will tidy wording but never change facts.
+
+name: "Abuzar Raziq"
+hero_name: "Abuzar Raziq"
+role: "Backend-focused software engineer"
+intro: "Backend engineer in the making. Building with Node.js and TypeScript, one honest line of code at a time."
+location: "Islamabad, Pakistan"
+status: "Open to paid internships and junior roles. Based in Islamabad, open to relocating."
+
+seo:
+  title: "Abuzar Raziq, Backend Engineer (Node.js, TypeScript)"
+  description: "Backend-focused software engineer in Islamabad. Builds APIs and data layers with Node.js, TypeScript, MongoDB and PostgreSQL. Open to internships."
+  url: "https://abuzar.iabuzarraziq.workers.dev"
+  og_image: ""
+  source: "https://github.com/abuzarraziqgithub/Modern-Portfolio"
+
+hero_polaroid:
+  image: "assets/polaroids/portrait.jpg"
+  alt: "Portrait of Abuzar at golden hour, looking off to the side, with hills and trees behind him"
+  caption: "Golden hour"
+
+work:
+  note: "made in the terminal, mostly"
+  heading: "My latest work"
+
+story:
+  heading: "One honest line of code at a time"
+  note: "plus tech videos in Urdu and English"
+
+connect:
+  email: "iabuzarraziq@gmail.com"
+  note: "Got a role or a bug? Tap me."
+  resume: "assets/resume.pdf"
+  socials:
+    - name: github
+      url: "https://github.com/abuzarraziqgithub"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/abuzar-raziq-8617b5429/"
+    - name: x
+      url: "https://x.com/abuzar__raziq"

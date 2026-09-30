@@ -1,0 +1,150 @@
+---
+import '../styles/fonts.css';
+import '../styles/global.css';
+
+import { getProjects, getSite, getStory } from '../lib/content';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Story from '../components/Story.astro';
+import Connect from '../components/Connect.astro';
+import Doodle from '../components/Doodle.astro';
+
+const site = getSite();
+const story = getStory();
+const projects = getProjects();
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  jobTitle: site.role,
+  email: `mailto:${site.connect.email}`,
+  url: site.seo.url,
+  ...(site.location ? { address: { '@type': 'PostalAddress', addressLocality: site.location } } : {}),
+  sameAs: site.connect.socials.map((s) => s.url),
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{site.seo.title}</title>
+    <meta name="description" content={site.seo.description} />
+    <link rel="canonical" href={site.seo.url} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#FFE94A" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={site.seo.title} />
+    <meta property="og:description" content={site.seo.description} />
+    <meta property="og:url" content={site.seo.url} />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+  </head>
+
+  <body>
+    <a class="skip" href="#work">Skip to work</a>
+
+    <Nav />
+
+    <main>
+      <Hero site={site} />
+
+      <section id="work" class="section defer">
+        <div class="shell">
+          <header class="work-head reveal">
+            {site.work.note && <p class="hand note">{site.work.note}</p>}
+            <h2>{site.work.heading}</h2>
+            <Doodle name="underline" size={120} class="rule" />
+          </header>
+
+          <div class="stack">
+            {projects.map((p, i) => <ProjectCard project={p} index={i} />)}
+          </div>
+        </div>
+      </section>
+
+      <Story story={story} heading={site.story.heading} note={site.story.note} />
+
+      <Connect connect={site.connect} name={site.name} />
+    </main>
+
+    <footer class="foot">
+      <div class="shell foot-in">
+        <p>
+          {site.name}
+          {site.location && <span class="dot">·</span>}
+          {site.location}
+        </p>
+        <p>
+          Built with Astro. Set in Inter Tight and Caveat.
+          {
+            site.seo.source && (
+              <>
+                <span class="dot" aria-hidden="true">·</span>
+                <a href={site.seo.source} rel="noopener">Source</a>
+              </>
+            )
+          }
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .work-head {
+    position: relative;
+    margin-block-end: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+    text-align: center;
+  }
+
+  .work-head h2 {
+    font-size: var(--step-3);
+  }
+
+  .note {
+    font-size: clamp(1.3rem, 1.1rem + 1vw, 1.9rem);
+    rotate: -2deg;
+    margin-block-end: 0.4rem;
+  }
+
+  :global(.rule) {
+    margin: 0.4rem auto 0;
+    color: var(--glow-1);
+    rotate: -1deg;
+  }
+
+  .stack {
+    display: grid;
+    /* minmax(0, 1fr) lets a card shrink below its content's min-content width.
+       Without it the terminal block's white-space: pre sets a 466px floor for the
+       whole track, which pushed every card, and the project screenshots inside it,
+       past a 390px phone. body overflow-x: hidden then clipped the overflow so no
+       scrollbar ever appeared. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .foot {
+    padding-block: clamp(2.5rem, 2rem + 2vw, 4rem);
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+
+  .foot-in {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .dot {
+    margin-inline: 0.4rem;
+    color: var(--line);
+  }
+</style>

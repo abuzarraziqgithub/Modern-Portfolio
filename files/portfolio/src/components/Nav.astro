@@ -1,0 +1,95 @@
+---
+const links = [
+  { href: '#hey', label: 'Hey' },
+  { href: '#work', label: 'Work' },
+  { href: '#story', label: 'Story' },
+  { href: '#chat', label: 'Chat' },
+];
+---
+
+<nav class="nav" aria-label="Sections">
+  <ul>
+    {
+      links.map((l) => (
+        <li>
+          <a href={l.href}>{l.label}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0.75rem auto auto 50%;
+    translate: -50% 0;
+    z-index: 40;
+    border-radius: var(--radius-pill);
+    background: color-mix(in oklab, var(--ink) 92%, transparent);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--lift-2);
+  }
+
+  ul {
+    display: flex;
+    gap: 0.15rem;
+    padding: 0.3rem;
+  }
+
+  a {
+    display: block;
+    padding: 0.5rem 0.85rem;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-pill);
+    color: #fff;
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition:
+      background-color 0.25s var(--ease-out),
+      color 0.25s var(--ease-out);
+  }
+
+  a:hover {
+    background: rgb(255 255 255 / 0.12);
+  }
+
+  a[aria-current] {
+    background: var(--pill-active-bg);
+    color: var(--pill-active-fg);
+  }
+
+  /* Below 700px the pill stays top-centre but compact. */
+  @media (max-width: 26.25rem) {
+    .nav {
+      inset: 0.5rem auto auto 50%;
+    }
+
+    a {
+      padding: 0.45rem 0.7rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+
+<script>
+  // The only nav JS: a scroll-spy that flips aria-current. Under 0.6 KB.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.nav a[href^="#"]')];
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        for (const l of links) l.toggleAttribute('aria-current', l.hash === '#' + e.target.id);
+      }
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  for (const l of links) {
+    const s = document.querySelector(l.hash);
+    if (s) io.observe(s);
+  }
+</script>

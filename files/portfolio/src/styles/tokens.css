@@ -1,0 +1,67 @@
+/* Design tokens. Values from docs/DESIGN.md, refine in the browser if needed. */
+:root {
+  color-scheme: light;
+
+  /* colour */
+  --page: #ffffff;
+  --card: #f4f4f2;
+  --ink: #0e0e0c;
+  --muted: #6c6c66;
+  --glow-1: #ffe94a;
+  --glow-2: #fff7b0;
+  --pill-active-bg: #3b3300;
+  --pill-active-fg: #ffe94a;
+  --line: #e3e3df;
+
+  /* radius by role */
+  --radius-card: 28px;
+  --radius-tile: 20px;
+  --radius-pill: 999px;
+
+  /* type */
+  --font: 'Inter Tight', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-hand: 'Caveat', 'Segoe Print', cursive;
+
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.91rem);
+  --step-0: clamp(1.0625rem, 1rem + 0.2vw, 1.13rem);
+  --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+  --step-3: clamp(2rem, 1.6rem + 2vw, 3.5rem);
+  --step-4: clamp(2.75rem, 1.8rem + 4.5vw, 6rem);
+  /* Sized against the shell's own inline size so the giant name always fills the
+     container: stacked words below 600px, one nowrap line from 600px up.
+     33cqw fills the longest word below the breakpoint; 17.9cqw fills the whole
+     name above it and leaves about 3% slack so no width forces a second line. */
+  --step-name: 33cqw;
+
+  /* space */
+  --gap: clamp(1rem, 0.7rem + 1.5vw, 1.75rem);
+  --pad: clamp(1.15rem, 0.6rem + 2.6vw, 3.5rem);
+  --section: clamp(4.5rem, 3rem + 7vw, 11rem);
+  --measure: 62ch;
+  --shell: 1200px;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* elevation: soft and low, varied per role */
+  --lift-1: 0 1px 2px rgb(14 14 12 / 0.05), 0 6px 18px -8px rgb(14 14 12 / 0.12);
+  --lift-2: 0 2px 4px rgb(14 14 12 / 0.05), 0 18px 40px -18px rgb(14 14 12 / 0.2);
+  --lift-3: 0 30px 60px -30px rgb(14 14 12 / 0.28);
+}
+
+/* Metric-matched fallback so the first paint does not jump. */
+@font-face {
+  font-family: 'Inter Tight Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 100%;
+  ascent-override: 96%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Caveat Fallback';
+  src: local('Comic Sans MS'), local('Segoe Print'), local('cursive');
+  size-adjust: 100%;
+}

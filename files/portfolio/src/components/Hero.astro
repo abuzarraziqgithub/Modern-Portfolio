@@ -1,0 +1,233 @@
+---
+import { asset } from '../lib/assets';
+import type { Site } from '../lib/content';
+import Doodle from './Doodle.astro';
+import ResponsiveImage from './ResponsiveImage.astro';
+
+interface Props {
+  site: Site;
+}
+
+const { site } = Astro.props;
+const words = site.hero_name.split(' ');
+const polaroid = site.hero_polaroid ? asset(site.hero_polaroid.image) : null;
+---
+
+<section id="hey" class="hero">
+  <div class="glow" aria-hidden="true"></div>
+
+  <div class="shell inner">
+    <p class="intro">
+      <Doodle name="sparkle" size={14} class="mark" />
+      {site.intro}
+    </p>
+
+    <h1 class="name">
+      {
+        words.map((w, i) => (
+          <span class="word" style={`--i:${i}`}>
+            {w}
+          </span>
+        ))
+      }
+    </h1>
+
+    <p class="role">
+      {site.role}
+      {site.location && <span class="dot">·</span>}
+      {site.location}
+    </p>
+
+    {
+      polaroid && (
+        <figure class="peek">
+          <ResponsiveImage
+            src={polaroid}
+            widths={[320, 480]}
+            sizes="(min-width: 700px) 244px, 50vw"
+            alt={site.hero_polaroid!.alt}
+            loading="eager"
+          />
+          <figcaption class="hand">{site.hero_polaroid!.caption}</figcaption>
+        </figure>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    padding-block: clamp(7rem, 5rem + 9vw, 12rem) clamp(3rem, 2rem + 4vw, 6rem);
+    overflow: clip;
+  }
+
+  /* Soft yellow glow from the top edge, fading to white by 70% height. */
+  .glow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      var(--glow-1),
+      var(--glow-2) 45%,
+      transparent 75%
+    );
+    animation: breathe 9s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    50% {
+      transform: scale(1.06);
+      opacity: 0.9;
+    }
+  }
+
+  .inner {
+    position: relative;
+    container-type: inline-size;
+    display: grid;
+    gap: clamp(1rem, 0.6rem + 1.4vw, 1.75rem);
+  }
+
+  .intro {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    max-width: 34ch;
+    color: var(--muted);
+    font-size: var(--step-0);
+  }
+
+  :global(.mark) {
+    flex: none;
+    translate: 0 2px;
+    color: var(--ink);
+  }
+
+  /* Giant name. The two layouts are structural, not left to font-size luck:
+     below 600px the words stack in a column, from 600px up they sit on one
+     nowrap line that the tuned --step-name is verified to fit. */
+  .name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: var(--step-name);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 0.85;
+    margin-block: auto 0;
+  }
+
+  @media (min-width: 37.5rem) {
+    .name {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 0 0.22em;
+      align-items: baseline;
+      font-size: 17.9cqw;
+    }
+  }
+
+  .word {
+    display: inline-block;
+    animation: rise 0.9s var(--ease-out) both;
+    animation-delay: calc(var(--i) * 90ms + 120ms);
+  }
+
+  @keyframes rise {
+    from {
+      translate: 0 40%;
+      opacity: 0;
+      filter: blur(10px);
+    }
+  }
+
+  .role {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    color: var(--muted);
+  }
+
+  .dot {
+    color: var(--line);
+  }
+
+  /* The polaroid peeks over the name after 1.4s. Animate the wrapper, hover the inner
+     figure, so the two transforms do not fight. */
+  .peek {
+    --r: 5deg;
+    position: absolute;
+    right: 0;
+    bottom: clamp(1rem, 4vw, 3rem);
+    width: clamp(9rem, 22vw, 15rem);
+    margin: 0;
+    padding: 0.6rem 0.6rem 2.4rem;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: var(--lift-3);
+    rotate: var(--r);
+    translate: 0 30%;
+    scale: 0.9;
+    opacity: 0;
+    animation: pop 0.7s var(--spring) 1.4s forwards;
+  }
+
+  @keyframes pop {
+    to {
+      translate: 0 0;
+      scale: 1;
+      opacity: 1;
+    }
+  }
+
+  .peek :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 30%;
+    border-radius: 3px;
+    background: var(--card);
+  }
+
+  .peek figcaption {
+    position: absolute;
+    inset: auto 0.6rem 0.5rem;
+    text-align: center;
+    font-size: 1.15rem;
+  }
+
+  @media (hover: hover) {
+    .peek:hover {
+      rotate: 2deg;
+      scale: 1.04;
+    }
+  }
+
+  /* Below 700px the peek sits in the flow so it cannot overlap the name. */
+  @media (max-width: 43.75rem) {
+    .peek {
+      position: static;
+      width: min(60%, 13rem);
+      margin-block-start: 0.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow,
+    .word,
+    .peek {
+      animation: none;
+    }
+
+    .word,
+    .peek {
+      opacity: 1;
+      translate: none;
+      scale: none;
+      filter: none;
+    }
+  }
+</style>

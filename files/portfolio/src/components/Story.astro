@@ -1,0 +1,205 @@
+---
+import { asset } from '../lib/assets';
+import type { Polaroid, Story } from '../lib/content';
+import PolaroidRail from './PolaroidRail.astro';
+import Doodle from './Doodle.astro';
+import ResponsiveImage from './ResponsiveImage.astro';
+
+interface Props {
+  story: Story;
+  heading: string;
+  note?: string;
+}
+
+const { story, heading, note } = Astro.props;
+const tiles = [...story.polaroids, ...story.collage_extra];
+// Drift depth per collage item, so nothing moves at the same speed.
+const depths = [-1, 0.6, -0.4, 0.9, -0.7, 0.3];
+---
+
+<section id="story" class="section defer">
+  <div class="shell">
+    <div class="bento">
+      <div class="tile text reveal">
+        <h2>{heading}</h2>
+        {note && <p class="hand note">{note}</p>}
+      </div>
+
+      <div class="tile rail-tile">
+        <PolaroidRail polaroids={story.polaroids} />
+      </div>
+
+      <div class="tile doodle-tile reveal">
+        <Doodle name="window" size={120} class="doodle" />
+        <p class="hand">mostly terminal, sometimes a browser</p>
+      </div>
+
+      <div class="tile text reveal">
+        {story.paragraphs.map((p) => <p class="para">{p}</p>)}
+      </div>
+    </div>
+
+    <ul class="collage" aria-label="Photos and illustrations">
+      {
+        tiles.map((t: Polaroid, i: number) => (
+          <li style={`--depth:${depths[i % depths.length]}`}>
+            <figure>
+              <ResponsiveImage
+                src={asset(t.image)}
+                widths={[320, 480, 768]}
+                sizes="(min-width: 900px) 260px, 45vw"
+                alt={t.alt}
+              />
+              <figcaption class="hand">{t.caption}</figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .bento {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: 1fr;
+  }
+
+  .tile {
+    padding: clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem);
+    border-radius: var(--radius-tile);
+    background: var(--card);
+  }
+
+  .text h2 {
+    font-size: var(--step-3);
+  }
+
+  .note {
+    margin-block-start: 0.6rem;
+    font-size: 1.35rem;
+  }
+
+  .para {
+    max-width: var(--measure);
+    color: var(--muted);
+  }
+
+  .para + .para {
+    margin-block-start: 0.9rem;
+  }
+
+  .rail-tile {
+    padding: 0;
+    background: none;
+    overflow: hidden;
+  }
+
+  .doodle-tile {
+    display: grid;
+    justify-items: center;
+    gap: 0.9rem;
+    text-align: center;
+    background: var(--glow-2);
+  }
+
+  :global(.doodle) {
+    color: var(--ink);
+  }
+
+  .doodle-tile p {
+    max-width: 22ch;
+    font-size: 1.3rem;
+  }
+
+  /* Collage: images around the tiles, drifting at different speeds on scroll. */
+  .collage {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap);
+    margin-block-start: var(--section);
+    list-style: none;
+  }
+
+  .collage figure {
+    margin: 0;
+    padding: 10px 10px 38px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: var(--lift-2);
+  }
+
+  .collage figure :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 30%;
+    border-radius: 3px;
+    background: var(--card);
+  }
+
+  .collage figcaption {
+    margin-block-start: 0.5rem;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  /* A two-column stagger on mobile, no drift. */
+  @media (min-width: 48rem) {
+    .bento {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .bento > :nth-child(1) {
+      grid-column: span 3;
+    }
+
+    .bento > :nth-child(2) {
+      grid-column: span 6;
+    }
+
+    .bento > :nth-child(3) {
+      grid-column: span 3;
+    }
+
+    .bento > :nth-child(4) {
+      grid-column: span 3;
+    }
+
+    .collage {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* Stagger the middle row so the grid does not read as a table. */
+    .collage > :nth-child(even) {
+      translate: 0 2.5rem;
+    }
+  }
+
+  @media (min-width: 90rem) and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .collage > * {
+        animation: drift linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 100%;
+      }
+    }
+  }
+
+  @keyframes drift {
+    from {
+      translate: 0 calc(var(--depth) * 40px);
+    }
+
+    to {
+      translate: 0 calc(var(--depth) * -40px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .collage > :nth-child(even) {
+      translate: none;
+    }
+  }
+</style>

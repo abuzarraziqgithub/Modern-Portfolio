@@ -1,0 +1,324 @@
+---
+import { asset, svg } from '../lib/assets';
+import type { Project } from '../lib/content';
+import Doodle from './Doodle.astro';
+import ResponsiveImage from './ResponsiveImage.astro';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project: p, index } = Astro.props;
+const href = p.links?.repo ?? p.links?.live;
+const shots = p.visual === 'screenshot' ? p.shots : undefined;
+const desktop = shots?.desktop ? asset(shots.desktop) : null;
+const mobile = shots?.mobile ? asset(shots.mobile) : null;
+---
+
+<article class="card" style={`--i:${index}`}>
+  <header class="head">
+    <h3>
+      {href ? <a class="stretched" href={href} rel="noopener">{p.title}</a> : p.title}
+    </h3>
+    {
+      href && (
+        <span class="arrow" aria-hidden="true">
+          <Doodle name="arrow" size={20} />
+        </span>
+      )
+    }
+  </header>
+
+  <p class="pitch">{p.pitch}</p>
+
+  <div class="shots">
+    {
+      p.visual === 'screenshot' &&
+        desktop && (
+          <>
+            <ResponsiveImage
+              src={desktop}
+              widths={[480, 768, 1024, 1600]}
+              sizes="(min-width: 1100px) 1042px, 92vw"
+              alt={shots!.desktop_alt ?? ''}
+            />
+            {mobile && (
+              <ResponsiveImage
+                src={mobile}
+                widths={[320, 480]}
+                sizes="(min-width: 700px) 200px, 40vw"
+                alt={shots!.mobile_alt ?? ''}
+                class="phone"
+              />
+            )}
+          </>
+        )
+    }
+
+    {
+      p.visual === 'terminal' && (
+        <div class="terminal" role="img" aria-label="Terminal output from the running app">
+          <div class="bar" aria-hidden="true">
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
+          <pre>{p.terminal}</pre>
+        </div>
+      )
+    }
+
+    {
+      p.visual === 'diagram' &&
+        p.diagram && (
+          <img
+            class="diagram"
+            src={svg(p.diagram).src}
+            alt={`Diagram of the ${p.title} request flow, drawn from the routes and models in the repository.`}
+            width={svg(p.diagram).width}
+            height={svg(p.diagram).height}
+            loading="lazy"
+            decoding="async"
+          />
+        )
+    }
+  </div>
+
+  <ul class="chips">
+    {p.stack.map((s) => <li>{s}</li>)}
+  </ul>
+
+  <details class="hard">
+    <summary>The hard part</summary>
+    <p>{p.hard_part}</p>
+    {
+      p.body && (
+        <div class="body">
+          {p.body.split(/\n{2,}/).map((para) => (
+            <p>{para}</p>
+          ))}
+        </div>
+      )
+    }
+  </details>
+
+  <p class="meta">
+    <span>{p.year}</span>
+    <span aria-hidden="true">·</span>
+    <span>{p.role}</span>
+    {
+      p.links?.live && (
+        <a href={p.links.live} rel="noopener">
+          Live
+        </a>
+      )
+    }
+    {
+      p.links?.repo && (
+        <a href={p.links.repo} rel="noopener">
+          Repo
+        </a>
+      )
+    }
+  </p>
+</article>
+
+<style>
+  .card {
+    position: sticky;
+    top: calc(4.5rem + var(--i) * 14px);
+    padding: clamp(1.15rem, 0.8rem + 1.6vw, 2rem);
+    border-radius: var(--radius-card);
+    background: var(--card);
+    box-shadow: var(--lift-1);
+  }
+
+  /* One link covers the whole card. Everything interactive inside sits above it. */
+  .stretched::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .card :is(summary, .meta a) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  h3 {
+    font-size: var(--step-2);
+  }
+
+  .arrow {
+    flex: none;
+    color: var(--muted);
+    transition: translate 0.25s var(--ease-out);
+  }
+
+  .pitch {
+    max-width: 46ch;
+    margin-block: 0.6rem 1.1rem;
+    color: var(--muted);
+  }
+
+  .shots {
+    position: relative;
+    border-radius: var(--radius-tile);
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .shots :global(img) {
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: translate 0.3s var(--ease-out);
+  }
+
+  /* Two overlapping shots on wide screens, one on mobile. */
+  @media (min-width: 43.75rem) {
+    .shots {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .shots :global(.phone) {
+      position: absolute;
+      right: 6%;
+      bottom: -14%;
+      width: 26%;
+      border-radius: 14px;
+      border: 4px solid var(--page);
+      box-shadow: var(--lift-3);
+    }
+  }
+
+  @media (hover: hover) {
+    .card:hover .shots :global(img) {
+      translate: 0 -8px;
+    }
+
+    .card:hover .arrow {
+      translate: 4px -2px;
+    }
+  }
+
+  /* Terminal visual */
+  .terminal {
+    background: #14140f;
+    color: #e8e8e2;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .bar {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  .bar i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.16);
+  }
+
+  pre {
+    margin: 0;
+    padding: 0.9rem 1rem 1.1rem;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    white-space: pre;
+  }
+
+  /* Diagram visual: keep the SVG whole, never crop it */
+  .shots :global(.diagram) {
+    object-fit: contain;
+    background: #fff;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-block-start: 1.1rem;
+  }
+
+  .chips li {
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: var(--page);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .hard {
+    margin-block-start: 1rem;
+  }
+
+  summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 0.3em;
+  }
+
+  summary:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .hard p,
+  .body p {
+    max-width: var(--measure);
+    margin-block-start: 0.7rem;
+    color: var(--muted);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block-start: 1rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .meta a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding-inline: 0.7rem;
+    border-radius: var(--radius-pill);
+    background: var(--page);
+    text-decoration: none;
+  }
+
+  .meta a:hover {
+    text-decoration: underline;
+  }
+
+  /* Below 700px cards lose the sticky stacking. */
+  @media (max-width: 43.75rem) {
+    .card {
+      position: static;
+    }
+  }
+</style>
