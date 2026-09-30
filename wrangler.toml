@@ -1,4 +1,11 @@
-name = "abuzar"
+# This root project is the old React prototype. It is superseded by the Astro
+# site in files/portfolio, which is the live portfolio.
+#
+# The name is deliberately NOT "abuzar": that worker serves the live site, and a
+# `wrangler deploy` from this directory used to overwrite it with the prototype.
+# Deploying from here now creates/updates the throwaway "abuzar-old-react"
+# worker and can no longer touch the live site.
+name = "abuzar-old-react"
 compatibility_date = "2026-09-11"
 
 [assets]
