@@ -1,7 +1,7 @@
 {
-  // Staging name so the first deploy does NOT overwrite the live site.
-  // See .opencode/skills/ship-to-workers/SKILL.md to switch to the live name.
-  "name": "abuzar-next",
+  // Live name. Was "abuzar-next" while staging; see
+  // .opencode/skills/ship-to-workers/SKILL.md.
+  "name": "abuzar",
   "compatibility_date": "2026-09-30",
   "assets": {
     "directory": "./dist",
